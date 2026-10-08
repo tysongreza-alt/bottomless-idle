@@ -1,26 +1,25 @@
-# BOTTOMLESS v1.0
+# BOTTOMLESS 2.0
 
-A free, one-handed idle drilling game for family and friends. No account, ads, or purchases.
+Free, independent, mobile-first idle excavation game. No ads, accounts, purchases or required daily tasks.
 
 ## Play
-Live game: https://tysongreza-alt.github.io/bottomless-idle/
+Open [BOTTOMLESS](https://tysongreza-alt.github.io/bottomless-idle/) in Safari or Chrome. Add to Home Screen to play like an app.
 
-On iPhone, open the game in Safari, tap **Share > Add to Home Screen**. On Android, use Chrome's **Install app** option.
+## Gameplay
+The drill mines automatically. Buy POWER, SPEED and VALUE. Tap the mine to build DRILL PRESSURE to 3× (25 taps, 10-second hold, 60-second decay). Use POWER SLAM every 12 seconds. Rebuild at depth 110 or later for permanent cores.
 
-## Game loop
-Your drill breaks rock automatically. Earn coins and buy three upgrades: **POWER** (damage), **SPEED** (hits per second), and **VALUE** (coins per layer). Use **POWER SLAM** once every 20 seconds for an optional burst of damage.
+## New in 2.0
+- 48 persistent specimens in six families, in addition to the original 22 depth artifacts
+- Seeded, refresh-resistant surprise encounters every 4–7 accumulated active minutes
+- Nine automatic, vector-drawn drill evolution stages
+- Permanent milestones and more distinctive underground environments
+- Balanced post-12 core growth with preservation of bonuses already earned by v1.4 players
+- Save migration to version 4 with a backup of the original v1.4 save
 
-Ore veins every 25 layers and treasure chambers every 100 layers provide bonus coins. Discover 22 unique artifacts at increasing depths. Each artifact adds a permanent 2% coin bonus. New mine biomes unlock as you descend; the world continues indefinitely.
+Open the menu to view **Specimens**, **Milestones**, **Artifacts**, and **Drill stages**.
 
-At depth 110 or deeper, optionally **REBUILD** your machine for permanent **cores**. Each core multiplies damage by 1.20 and coin value by 1.15. Rebuilding resets current depth, temporary upgrades and coins, but keeps best depth, artifacts, and cores. Deeper rebuilds yield more cores.
+## Saves
+Progress is saved to your device's browser storage. Each person or device has an independent game. To protect your progress, use **Menu → Export save**, especially before changing devices. Clearing browser data can delete a save. The previous game source is preserved as `legacy-v1.4.html` for rollback.
 
-## Offline and saves
-Progress saves locally to the browser or installed app. While away, your drill simulates at 80% speed using the upgrades you had when you closed the game. There are no streaks, energy systems, or paid content.
-
-Use **Menu > Export save** periodically for a backup. Import the JSON backup into the same version to restore progress. Saves don't automatically sync between devices. Clearing site data or uninstalling the app may delete local progress.
-
-## Original v0.1 save
-The original unbalanced game remains available at [legacy.html](legacy.html) and uses its original local-storage key (`bottomless_idle_v1`). The redesigned v1.0 starts a separate save (`bottomless_idle_v3`) rather than importing an inflated old balance.
-
-## QA
-Automated browser testing covered mobile widths 320, 390, and 430 px, first-hour progression, successive rebuilds, save/reopen, collection interface, eight-hour idle calculations, and 343 arithmetic/pricing checks. These are simulations and do not replace extended hands-on playtesting on every phone.
+## Hosting
+GitHub Pages, branch `main`, root.
