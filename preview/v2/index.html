@@ -201,7 +201,7 @@ function encounterTick(seconds,gross){
   const index=s.encounterIndex++;
   const labels=['SPARK SEAM','BURIED CACHE','ANCIENT VAULT'];
   flashEvent(labels[kind],`+${reward.fmt()} bonus coins`,kind===2?'#d0a5ff':'#ffd57b');
-  shake=Math.min(15,shake+(kind===2?13:kind===1?7:4));hitParticles(kind===2?'✦ VAULT!':kind===1?'✦ CACHE!':'✦ SPARK!');
+  shake=Math.min(15,shake+(kind===2?13:kind===1?7:4));hitParticles('');
   if(kind>0){const chance=kind===1?.30:.60;if(seededUnit(index,12)<chance)awardSpecimen(index+500000,'Underground encounter')}
   save();
  }
