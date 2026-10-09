@@ -59,13 +59,69 @@
 .special-layer[hidden]{display:none!important}
 .archive-heading{font-size:12px;letter-spacing:.08em;color:#99dddf;margin:15px 0 6px}.archive-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.archive-card{border:1px solid #365174;border-radius:12px;padding:10px;background:#132641;min-width:0}.archive-card.locked{opacity:.53}.archive-card b{display:block;font-size:12px}.archive-card small{color:#b4c9df;font-size:10px;overflow-wrap:anywhere}.archive-glyph{display:block;font-size:19px;margin-bottom:4px;font-weight:800;color:#a4e4e7}.archive-card.locked .archive-glyph{color:#a1a8bb}
 @media(prefers-reduced-motion:reduce){.event-flash.show{animation:none}}
+
+/* BOTTOMLESS V2.2 DESIGN SYSTEM: authored game graphics, 100% vector/Canvas */
+:root{--bg:#070d19;--panel:#0e1c30;--panel2:#152945;--line:#35516e;--text:#eff8ff;--muted:#93acc4;--cyan:#62e9e0;--gold:#f7c879;--purple:#b4a0f5;--green:#8de0b9}
+body{background:radial-gradient(ellipse 480px 400px at 50% -140px,#274362 0,#0c1829 68%,transparent 100%),#070d19}
+.app{position:relative;isolation:isolate}
+.brand{font-weight:950;letter-spacing:.07em;background:linear-gradient(95deg,#fff9e9 0%,#a4f7ef 72%,#63cbd4 100%);-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 1px 5px #46cbd030)}
+.tag{color:#82b1bd;letter-spacing:.22em}
+.menu,.mode{background:linear-gradient(145deg,#1b354c,#0d2034);border:1px solid #3e6377;box-shadow:inset 0 1px 0 #ffffff0e;color:#dfedf7}
+.stat{background:linear-gradient(145deg,#182b43 0%,#0d1c30 100%);border:1px solid #32516b;box-shadow:inset 0 1px 0 #ffffff10,0 2px 10px #0002;position:relative;overflow:hidden}
+.stat:before{content:"";position:absolute;left:9px;right:9px;top:0;height:1px;background:linear-gradient(90deg,transparent,#80cddd80,transparent)}
+.stat .label{color:#a5b8cb;letter-spacing:.12em}
+.mine{border:1px solid #517c8d;background:#081621;box-shadow:0 8px 25px #0008,inset 0 0 0 1px #9fe8f218;position:relative}
+.mine:after{content:"";pointer-events:none;position:absolute;inset:0;border:1px solid #b9eff51c;border-radius:inherit;box-shadow:inset 0 0 35px #031322;z-index:1}
+.scene{background:linear-gradient(180deg,#14283d,#10283e)}
+.biome,.event-log-btn{border:1px solid #7fb3bf80;background:#091c2be8;box-shadow:inset 0 1px 0 #ffffff1b,0 2px 8px #0006;border-radius:7px;color:#e9fbff;text-shadow:none;backdrop-filter:blur(8px)}
+.biome{letter-spacing:.035em}
+.event-log-btn{color:#a7f3ee}.event-log-btn b{color:#ffe4ab}
+.special-layer{top:auto;bottom:39px;left:12px;transform:none;border-radius:5px;background:#172b36f5;border-color:#d9b470;color:#ffe1a0;font-size:9px;box-shadow:0 2px 12px #0007;z-index:3;max-width:62%;overflow:hidden;text-overflow:ellipsis}
+.special-layer.vault{color:#eec8ff;border-color:#d6a8fc;background:#2c1d40f2}
+.health{background:#040b15ea;border:1px solid #6e9ea750;box-shadow:inset 0 1px 3px #000a,0 1px 5px #0007;border-radius:5px}
+.healthfill{background:linear-gradient(90deg,#f4a960,#ffe39e);border-radius:3px;box-shadow:inset 0 1px 0 #fff8d74f,0 0 11px #ffc47769}
+.healthtext{color:#fff5e7;text-shadow:0 2px 5px #000b;letter-spacing:.11em}
+.pressure-panel{background:linear-gradient(120deg,#17314a,#10243b);border:1px solid #457589;box-shadow:inset 0 1px 0 #ffffff13}
+.pressure-track,.progress-track{background:#071726;border:1px solid #3a677579;box-shadow:inset 0 1px 5px #0008}
+.pressure-fill{background:linear-gradient(90deg,#3cbbd5,#6fefcc 60%,#ffdc8b);box-shadow:0 0 8px #75ebd18a}
+.pressure-value{color:#a3f7ea;text-shadow:0 0 14px #1fbfc42e}
+.perk{background:linear-gradient(120deg,#162d41,#0e2036);border-color:#3c6179;box-shadow:inset 0 1px 0 #ffffff12}
+.perk:active{background:#25465b}.perk-detail{color:#96edcd}
+.progress-track span{background:linear-gradient(90deg,#3c91ad,#88f0e1)}
+.slam{background:linear-gradient(105deg,#ffe3a0,#f6b762);color:#40270d;border:1px solid #edc27a;box-shadow:inset 0 1px 0 #fff7df8a,0 2px 0 #986237}
+.slam:disabled{background:linear-gradient(130deg,#263e52,#1c314b);border-color:#46647e;color:#9cb5c8;box-shadow:inset 0 1px 0 #ffffff15}
+.slam:not(:disabled){animation:ready-pulse 2.6s ease-in-out infinite}
+@keyframes ready-pulse{50%{box-shadow:inset 0 1px 0 #fff7df8a,0 2px 0 #986237,0 0 14px #ffd68b60}}
+.income{background:linear-gradient(140deg,#12283c,#0a1c2b);border-color:#34566a;box-shadow:inset 0 1px 0 #ffffff10}
+.income b{color:#93e6b6}
+.uphead strong{color:#d1e8ee;letter-spacing:.13em}
+.upgrade{background:linear-gradient(110deg,#13273b,#0e1d31);border:1px solid #36576d;box-shadow:inset 0 1px 0 #ffffff0a,0 2px 4px #0005;transition:border-color .12s,transform .12s}
+.upgrade.afford{border-color:#55b6aa;box-shadow:inset 0 0 0 1px #479e8940,0 2px 4px #0005}
+.upgrade:disabled{opacity:.6}
+.upico{background:linear-gradient(145deg,#234960,#163247);border:1px solid #447386;color:#9de7e3;box-shadow:inset 0 1px 0 #ffffff1a}
+.upico svg{width:21px;height:21px;stroke-width:2.1px}
+.upgrade[data-upgrade="speed"] .upico{color:#f5d58a}
+.upgrade[data-upgrade="value"] .upico{color:#bcaaff}
+.upname{color:#eef9ff}.upinfo{color:#98b9cb}.upprice{color:#ffe0a1}
+.rebuild{background:linear-gradient(100deg,#2f274b,#1e2442);border-color:#75659c;color:#d7c6ff}
+.footer{color:#6d93a6}
+.dialog{background:linear-gradient(180deg,#152e43,#0b1b2e);border:1px solid #537e91;box-shadow:0 18px 58px #000c}
+.dialog-head{background:linear-gradient(150deg,#1d4357,#193146);border-bottom:1px solid #4a7184}
+.dialog-close{border:1px solid #70a1ae;background:#10283d}
+.archive-card{background:linear-gradient(140deg,#152e42,#102136);border-color:#42677b}
+.archive-glyph{color:#95e6dc}
+.archive-card.locked{opacity:.51}
+.event-flash{top:34%;left:15%;right:15%;border-radius:9px;background:linear-gradient(115deg,#0c2034f5,#1e3445f7);border:1px solid #8ad8d4;box-shadow:0 6px 22px #000b,inset 0 1px 0 #ffffff21}
+.event-flash strong{letter-spacing:.13em}
+@media(prefers-reduced-motion:reduce){.slam:not(:disabled){animation:none}.upgrade{transition:none}}
+
 </style>
 </head>
 <body>
 <main class="app">
   <header class="top"><div><div class="brand">BOTTOMLESS</div><div class="tag">DIG DEEP. GET RICH.</div></div><button class="menu" id="menuBtn" aria-label="Open game menu">☰</button></header>
   <div class="stats"><div class="stat"><div class="label">◈ Coins</div><div class="num" id="coins">0</div></div><div class="stat"><div class="label">↧ Depth</div><div class="num" id="depth">0</div></div><div class="stat"><div class="label">✦ Best</div><div class="num" id="best">0</div></div></div>
-  <section class="mine" aria-label="Live animated mine. Tap to increase drill pressure."><canvas id="scene" class="scene"></canvas><div class="mine-bar"><span class="biome" id="biome">Surface Soil</span><button type="button" class="event-log-btn" id="eventLogBtn" aria-label="View special encounters">✦ EVENTS <b id="encounterCount">0</b></button></div><div id="specialLayer" class="special-layer" hidden></div><div id="eventFlash" class="event-flash" aria-live="polite"></div><div class="healthtext" id="healthText">Next layer</div><div class="health"><div class="healthfill" id="healthFill"></div></div></section>
+  <section class="mine" aria-label="Animated mining chamber. Tap the mine to increase drill pressure."><canvas id="scene" class="scene"></canvas><div class="mine-bar"><span class="biome" id="biome">Surface Soil</span><button type="button" class="event-log-btn" id="eventLogBtn" aria-label="View special encounters">✦ EVENTS <b id="encounterCount">0</b></button></div><div id="specialLayer" class="special-layer" hidden></div><div id="eventFlash" class="event-flash" aria-live="polite"></div><div class="healthtext" id="healthText">Next layer</div><div class="health"><div class="healthfill" id="healthFill"></div></div></section>
   <div id="pressurePad" class="pressure-panel" role="button" tabindex="0" aria-label="Tap to build drill pressure, maximum 3 times damage"><div><div class="pressure-label">DRILL PRESSURE</div><div id="pressureHint" class="pressure-hint">TAP THE MINE TO BOOST</div></div><div class="pressure-track"><div id="pressureFill" class="pressure-fill"></div></div><span id="pressureValue" class="pressure-value">1.0×</span></div>
   <div class="perks" aria-label="Permanent bonuses">
     <button type="button" id="treasure" class="perk" aria-label="View artifact collection"><span class="perk-title">◆ ARTIFACTS <b id="artifactCount">0/22</b></span><span class="perk-detail" id="artifactBonus">+0% COINS</span></button>
@@ -75,12 +131,12 @@
   <div class="action"><button id="slamBtn" class="slam" disabled>POWER SLAM<span class="sub" id="slamText">Charging…</span></button><div class="income"><b id="income">+0 / sec</b><span>MINING COINS / SEC</span></div></div>
   <div class="uphead"><strong>UPGRADE THE DRILL</strong><button id="modeBtn" class="mode">BUY ×1 ▾</button></div>
   <div class="upgrades">
-    <button class="upgrade" data-upgrade="power"><div class="upico">⚒</div><div><div class="upname">POWER <span id="lvlpower"></span></div><div class="upinfo" id="descPower">Bigger hits</div></div><div class="upprice" id="pricepower">15<span>COINS</span></div></button>
-    <button class="upgrade" data-upgrade="speed"><div class="upico">⚡</div><div><div class="upname">SPEED <span id="lvlspeed"></span></div><div class="upinfo" id="descSpeed">More hits per second</div></div><div class="upprice" id="pricespeed">25<span>COINS</span></div></button>
-    <button class="upgrade" data-upgrade="value"><div class="upico">◆</div><div><div class="upname">VALUE <span id="lvlvalue"></span></div><div class="upinfo" id="descValue">More coins per layer</div></div><div class="upprice" id="pricevalue">35<span>COINS</span></div></button>
+    <button class="upgrade" data-upgrade="power"><div class="upico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 20 8-8M8 3l4 4-5 5-4-4z"/><path d="m20 20-8-8m4-9-4 4 5 5 4-4z"/></svg></div><div><div class="upname">POWER <span id="lvlpower"></span></div><div class="upinfo" id="descPower">Bigger hits</div></div><div class="upprice" id="pricepower">15<span>COINS</span></div></button>
+    <button class="upgrade" data-upgrade="speed"><div class="upico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 13h7l-1 9 10-12h-7l1-8z"/></svg></div><div><div class="upname">SPEED <span id="lvlspeed"></span></div><div class="upinfo" id="descSpeed">More hits per second</div></div><div class="upprice" id="pricespeed">25<span>COINS</span></div></button>
+    <button class="upgrade" data-upgrade="value"><div class="upico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h10l5 7-10 11L2 10z"/><path d="M2 10h20M7 3l5 18L17 3"/></svg></div><div><div class="upname">VALUE <span id="lvlvalue"></span></div><div class="upinfo" id="descValue">More coins per layer</div></div><div class="upprice" id="pricevalue">35<span>COINS</span></div></button>
   </div>
   <div class="banners"><button class="rebuild" id="rebuildBtn" disabled>✦ REBUILD MACHINE</button><span class="save" id="saved">Autosave on</span></div>
-  <div class="footer"><span>Offline play · Saved on device</span><span>v2.1</span></div>
+  <div class="footer"><span>Offline play · Saved on device</span><span>v2.2</span></div>
 </main>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="overlay" id="overlay"><div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"><div class="dialog-head"><h2 id="dialogTitle"></h2><button type="button" class="dialog-close" id="dialogClose" aria-label="Close menu">×</button></div><div class="dialog-scroll" id="dialogScroll"><div id="dialogBody"></div><div class="dialog-actions" id="dialogActions"></div></div></div></div>
@@ -366,54 +422,117 @@ function updateUI(){if(!s.hp)s.hp=hpAt(s.depth);$('coins').textContent=s.coins.f
  item.setAttribute('aria-label',name.toUpperCase()+', level '+level+'. '+(count>0?'Buy '+count+' '+unit.toLowerCase()+' for '+total.fmt()+' coins. '+oldStat+' to '+newStat+' '+UPGRADE_UNIT[name]: 'Next level costs '+next.fmt()+' coins, insufficient balance.'));
  }$('modeBtn').textContent=mode==='1'?'BUY ×1 ▾':'BUY MAX ▾';const core=eligibleCores();$('rebuildBtn').disabled=core===0;$('rebuildBtn').textContent=core?'✦ REBUILD FOR +'+core+' CORE'+(core>1?'S':''):'✦ REBUILD UNLOCKS AT 110';const elapsed=(Date.now()-lastSlam)/1000;const ready=elapsed>=12;$('slamBtn').disabled=!ready;$('slamText').textContent=ready?'TAP FOR A HUGE HIT':('Ready in '+Math.ceil(12-elapsed)+'s');$('pressureValue').textContent=pressure.toFixed(1)+'×';$('pressureFill').style.width=((pressure-1)*50).toFixed(1)+'%';const inactive=performance.now()-lastPressureTap;$('pressureHint').textContent=pressure>=2.999&&inactive<PRESSURE_HOLD_MS?'MAXED · '+Math.ceil((PRESSURE_HOLD_MS-inactive)/1000)+'S HOLD':pressure>1&&inactive>=PRESSURE_HOLD_MS?'PRESSURE COOLING':pressure>1?'KEEP TAPPING TO BOOST':'TAP THE MINE TO BOOST';}
 const canvas=$('scene'),ctx=canvas.getContext('2d'),Stars=Array.from({length:20},(_,i)=>({x:(i*109.7)%401,y:(i*73.3)%301,r:1+(i%3)}));
-function draw(){if(!visible)return;const W=canvas.clientWidth,h=canvas.clientHeight,dpr=Math.min(window.devicePixelRatio||1,2),rw=Math.round(W*dpr),rh=Math.round(h*dpr);if(canvas.width!==rw||canvas.height!==rh){canvas.width=rw;canvas.height=rh}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,h);const env=biome(s.depth),now=performance.now(),motion=now/1000;ctx.save();ctx.translate((Math.random()-.5)*shake,(Math.random()-.5)*shake);shake*=.87;
- let bg=ctx.createLinearGradient(0,0,0,h);bg.addColorStop(0,'#0a1830');bg.addColorStop(.65,env.top);bg.addColorStop(1,env.bottom);ctx.fillStyle=bg;ctx.fillRect(-12,-12,W+24,h+24);
- // Distinctive authored geological motifs; low-overdraw, stable without images.
-  const kind=biomeId(s.depth),baseY=h*.43;
-  ctx.save();ctx.globalAlpha=.23;ctx.strokeStyle=env.gem;ctx.lineWidth=2;
-  for(let j=0;j<6;j++){
-   const xx=24+j*(W-48)/5,yy=baseY+(j%3)*24;
-   ctx.beginPath();
-   if(kind===1||kind===4){ctx.moveTo(xx-10,yy);ctx.lineTo(xx,yy-9);ctx.lineTo(xx+13,yy+4);ctx.lineTo(xx+6,yy+13)}
-   else if(kind===2||kind===8){ctx.moveTo(xx-8,yy+11);ctx.lineTo(xx-3,yy-13);ctx.lineTo(xx+3,yy+8);ctx.lineTo(xx+9,yy-7)}
-   else if(kind===3||kind===7){ctx.moveTo(xx-9,yy);ctx.lineTo(xx,yy-14);ctx.lineTo(xx+10,yy);ctx.lineTo(xx,yy+16);ctx.closePath()}
-   else if(kind===6){ctx.arc(xx,yy,8,0,Math.PI*2)}
-   else{ctx.moveTo(xx-10,yy+8);ctx.lineTo(xx,yy-7);ctx.lineTo(xx+10,yy+8)}
-   ctx.stroke();
+function draw(){
+ if(!visible)return;
+ const W=canvas.clientWidth,h=canvas.clientHeight,dpr=Math.min(window.devicePixelRatio||1,2),rw=Math.round(W*dpr),rh=Math.round(h*dpr);
+ if(canvas.width!==rw||canvas.height!==rh){canvas.width=rw;canvas.height=rh}
+ ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,h);
+ const env=biome(s.depth),tier=stageIndex(),time=performance.now()/1000,layer=s.depth+1;
+ const special=layer%100===0?2:layer%25===0?1:0;
+ const full=hpAt(s.depth),broken=Math.max(0,Math.min(1,1-s.hp.div(full).number()));
+ const sx=W/2,ground=h*.73,rigY=ground-104,bodyW=Math.min(150,W*.52),bodyX=sx-bodyW/2;
+ const C={metal:'#344f65',edge:'#66899d',dark:'#0a1828',light:'#b0cdd6',copper:'#d9a26b',sky:'#c5eaf0'};
+ const tone=tier>=8?'#f9db92':tier>=7?'#d4bbff':tier>=6?'#8bedd2':tier>=4?'#8fdff2':tier>=3?'#ffbb79':tier>=2?'#88cdec':env.gem;
+ const shakeScale=shake*.24;
+ ctx.save();ctx.translate((Math.random()-.5)*shakeScale,(Math.random()-.5)*shakeScale);shake*=.86;
+ function path(pts,fill,stroke,width=1){ctx.beginPath();pts.forEach((q,i)=>i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]));ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=width;ctx.stroke()}}
+ function rect(x,y,w,hh,fill,stroke,r=0){ctx.beginPath();ctx.roundRect(x,y,w,hh,r);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.lineWidth=1;ctx.strokeStyle=stroke;ctx.stroke()}}
+ function beam(x,y,r,c){const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,c);g.addColorStop(1,'#00000000');ctx.fillStyle=g;ctx.fillRect(x-r,y-r,2*r,2*r)}
+ // Atmospheric rock cross-section. Its parallax is derived from depth, not images.
+ let bg=ctx.createLinearGradient(0,0,0,h);bg.addColorStop(0,'#071624');bg.addColorStop(.55,env.top);bg.addColorStop(1,env.bottom);ctx.fillStyle=bg;ctx.fillRect(0,0,W,h);
+ beam(W*.5,h*.30,W*.53,env.gem+'19');
+ for(let band=0;band<6;band++){
+  const yy=h*.19+band*h*.115-((s.depth*.31)%Math.max(1,h*.115));
+  ctx.fillStyle=band%2?'#08152624':'#bdd8e009';ctx.fillRect(0,yy,W,h*.07);
+  ctx.beginPath();for(let i=0;i<=12;i++){const x=i*W/12,y=yy+9+Math.sin(i*1.7+band*2.2)*3.2+(i%4)*1.1;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)}
+  ctx.strokeStyle='#d0ebef16';ctx.lineWidth=1;ctx.stroke();
+ }
+ // Carved rock facets and small mineral inclusions, seeded by depth for stable visuals.
+ for(let i=0;i<11;i++){
+  const x=((i*97+23)%397)/397*W,y=((i*53+31+s.depth*1.8)%(h*.78));
+  const size=2+(i%3)*1.4;
+  path([[x,y-size*1.9],[x+size,y],[x,y+size*1.9],[x-size,y]],i%3===0?env.gem+'94':env.gem+'38');
+ }
+ // Tunnel engineering: recessed rails, rivets, and distance ticks.
+ rect(7,0,18,h,'#091b2d','#486e7c');rect(W-25,0,18,h,'#091b2d','#486e7c');
+ rect(11,0,3,h,'#79a4b26b');rect(W-14,0,3,h,'#79a4b26b');
+ for(let y=10;y<h;y+=26){rect(8,y,14,2,'#a8d4e461');rect(W-22,y,14,2,'#a8d4e461')}
+ // The current rock is tangible, with extra silhouettes for ore veins and vaults.
+ const slabTop=ground+7;
+ let rock=ctx.createLinearGradient(0,slabTop,0,h);rock.addColorStop(0,special===2?'#624b76':special===1?'#6f5942':env.bottom);rock.addColorStop(1,'#132333');ctx.fillStyle=rock;ctx.fillRect(24,slabTop,W-48,h-slabTop);
+ rect(24,slabTop,W-48,4,special===2?'#d7a9f6':special===1?'#f6d08b':'#7cacc0');
+ if(special){
+  beam(sx,slabTop+7,W*.30,special===2?'#dfacff50':'#ffd87c42');
+  for(let i=0;i<7;i++){const x=39+i*(W-78)/6,y=slabTop+12+(i%2)*9,sc=4+i%3*2;
+   path([[x,y-sc],[x+sc,y],[x,y+sc],[x-sc,y]],special===2?'#e3b5f4':'#ffe2a1','#e9e5dd75');}
+ }
+ if(broken>.09){
+  ctx.strokeStyle=special===2?'#eac0fa94':'#d0c3a97a';ctx.lineWidth=1.2;
+  for(let i=0;i<5;i++){
+   const x=sx+(i-2)*19;ctx.beginPath();ctx.moveTo(x,slabTop+2);ctx.lineTo(x+(i%2?-9:8)*broken,slabTop+9+11*broken);ctx.lineTo(x+13*broken,slabTop+14+20*broken);ctx.stroke();}
+ }
+ // Contact shadow and warm abrasion light.
+ ctx.fillStyle='#020a1199';ctx.beginPath();ctx.ellipse(sx,ground+4,W*.27,7,0,0,Math.PI*2);ctx.fill();
+ beam(sx,ground-1,48,tone+'52');
+ // The hoist, centered brackets, and mechanical shock housing.
+ rect(sx-6,0,12,rigY+4,'#1e3548','#58798a',2);rect(sx-1,0,3,rigY+4,'#98b9c881');
+ rect(sx-37,rigY-8,74,11,'#192f44','#5b8193',3);rect(sx-26,rigY-5,52,4,'#9ab8c188');
+ const bob=Math.sin(time*rate()*6)*Math.min(2.4,1+pressure*.4);
+ const top=rigY+bob;
+ // Side stabilizers and tier-dependent evolution. Each tier changes physical geometry.
+ if(tier>=1){
+  rect(bodyX-11,top+9,16,40,'#203a4d','#7796a0',3);rect(bodyX+bodyW-5,top+9,16,40,'#203a4d','#7796a0',3);
+  for(const xx of [bodyX-8,bodyX+bodyW+4])rect(xx,top+15,5,7,tone);
+ }
+ if(tier>=2){
+  rect(bodyX-20,top+20,15,31,'#15364c','#7399ae',3);rect(bodyX+bodyW+5,top+20,15,31,'#15364c','#7399ae',3);
+  rect(bodyX-16,top+26,7,14,'#75d7ef');rect(bodyX+bodyW+9,top+26,7,14,'#75d7ef');
+ }
+ if(tier>=4){
+  for(let side of [-1,1]){
+   const x=sx+side*(bodyW/2+19);
+   path([[x,top+20],[x+side*9,top+29],[x,top+46],[x-side*4,top+30]],'#7dd6e7','#b0e9ff');
   }
-  ctx.restore();
- // tunnels, rock formations, seams
- for(let j=0;j<7;j++){const yy=h*.42+j*56-((s.depth*.65)%56);ctx.fillStyle=(j%2===0?'#ffffff0b':'#0000001c');ctx.fillRect(-20,yy,W+40,4);ctx.strokeStyle='#ffffff0f';ctx.lineWidth=1;ctx.beginPath();for(let k=0;k<=8;k++){const x=k*W/8,y=yy+13+Math.sin(k*2.6+j)*9;if(k===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)}ctx.stroke()}
- // side shaft supports
- ctx.fillStyle='#152138';ctx.fillRect(8,0,12,h);ctx.fillRect(W-20,0,12,h);ctx.fillStyle='#38506b';for(let y=-5;y<h;y+=39){ctx.fillRect(9,y,10,2);ctx.fillRect(W-19,y,10,2)}
- // rare ore dots
- for(const st of Stars){let x=st.x/401*W,y=((st.y+s.depth*2.9)%h);ctx.fillStyle=env.gem+'aa';ctx.beginPath();ctx.moveTo(x,y-st.r*2);ctx.lineTo(x+st.r,y);ctx.lineTo(x,y+st.r*2);ctx.lineTo(x-st.r,y);ctx.closePath();ctx.fill()}
- // impact platform
- const ground=h*.62;const drillTier=stageIndex();ctx.fillStyle='#00000060';ctx.beginPath();ctx.ellipse(W*.5,ground+16,W*.30,15,0,0,Math.PI*2);ctx.fill();
- const specialRock=(s.depth+1)%25===0,treasureRock=(s.depth+1)%100===0;ctx.strokeStyle=treasureRock?'#d6b4ff':specialRock?'#ffd36d':'#e9b56c';ctx.lineWidth=specialRock?6:3;ctx.shadowColor=ctx.strokeStyle;ctx.shadowBlur=specialRock?17:0;ctx.beginPath();ctx.moveTo(W*.28,ground);ctx.lineTo(W*.72,ground);ctx.stroke();ctx.shadowBlur=0;
- // gear suspension
- const cx=W/2,headY=ground-79+Math.sin(motion*rate()*7*pressure)*2;ctx.strokeStyle='#546b83';ctx.lineWidth=7;ctx.beginPath();ctx.moveTo(cx,-10);ctx.lineTo(cx,headY-31);ctx.stroke();ctx.strokeStyle='#a8c5da';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(cx-2,-10);ctx.lineTo(cx-2,headY-31);ctx.stroke();
- const gl=ctx.createRadialGradient(cx,headY+12,7,cx,headY+12,100);gl.addColorStop(0,env.gem+'77');gl.addColorStop(1,'#00000000');ctx.fillStyle=gl;ctx.fillRect(cx-100,headY-88,200,200);
- // drill motor body
- ctx.fillStyle='#131f34';ctx.fillRect(cx-62,headY-40,124,55);ctx.fillStyle='#597795';ctx.fillRect(cx-57,headY-37,114,49);ctx.fillStyle='#233b58';ctx.fillRect(cx-53,headY-33,106,41);ctx.fillStyle=env.accent;ctx.fillRect(cx-52,headY-29,104,7);ctx.fillStyle='#9ae4fa';ctx.fillRect(cx-45,headY-14,90,14);ctx.fillStyle='#192c47';ctx.font='800 11px system-ui';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('BOTTOMLESS',cx,headY-7,82);ctx.textBaseline='alphabetic';
-  // Author-drawn evolution details, earned from lifetime best depth.
-  if(drillTier>=1){ctx.fillStyle='#607e9e';ctx.fillRect(cx-56,headY-35,6,42);ctx.fillRect(cx+50,headY-35,6,42)}
-  if(drillTier>=2){ctx.fillStyle='#d4dfe8';ctx.fillRect(cx-52,headY-42,104,5);ctx.fillStyle='#223958';ctx.fillRect(cx-58,headY-15,8,19);ctx.fillRect(cx+50,headY-15,8,19)}
-  if(drillTier>=3){ctx.fillStyle='#ffad69';ctx.fillRect(cx-54,headY-28,4,14);ctx.fillRect(cx+50,headY-28,4,14)}
-  if(drillTier>=4){ctx.fillStyle='#8ff9ff';for(const x of [-58,56]){ctx.beginPath();ctx.moveTo(cx+x,headY-8);ctx.lineTo(cx+x+3,headY-19);ctx.lineTo(cx+x+6,headY-8);ctx.fill()}}
-  if(drillTier>=5){ctx.strokeStyle='#e3cf98';ctx.lineWidth=2;ctx.strokeRect(cx-47,headY-39,94,51)}
-  if(drillTier>=6){ctx.fillStyle='#a2f4d8';ctx.fillRect(cx-56,headY-40,4,37);ctx.fillRect(cx+52,headY-40,4,37)}
-  if(drillTier>=7){ctx.fillStyle='#ceaeff';ctx.fillRect(cx-69,headY-25,9,9);ctx.fillRect(cx+60,headY-25,9,9)}
-  if(drillTier>=8){ctx.strokeStyle='#ffda8b';ctx.lineWidth=2;ctx.strokeRect(cx-61,headY-45,122,66)}
-  if(artifactTrait('Bottomless Emblem')){ctx.fillStyle='#f4cc84';ctx.fillRect(cx+42,headY-31,6,6)}
-
- // spinning drill bit
- ctx.save();ctx.translate(cx,headY+21);ctx.rotate(Math.sin(motion*rate()*10)*.03);const spin=motion*rate()*5*pressure;ctx.fillStyle='#91a7bf';ctx.beginPath();ctx.moveTo(-21,-6);ctx.lineTo(21,-6);ctx.lineTo(11,17);ctx.lineTo(0,39);ctx.lineTo(-11,17);ctx.closePath();ctx.fill();ctx.strokeStyle='#d3e3ef';ctx.lineWidth=4;for(let i=0;i<3;i++){const y=i*10;ctx.beginPath();ctx.moveTo(-16+i*3,y);ctx.lineTo(16-i*3,y+Math.sin(spin+i)*4);ctx.stroke()}ctx.restore();
- // sparks particles
+ }
+ if(tier>=6){beam(sx,top+42,bodyW*.77,tone+'32')}
+ // Main motor: bevelled shell with inset reinforced blue display, bolts, vents.
+ path([[bodyX+13,top],[bodyX+bodyW-13,top],[bodyX+bodyW,top+13],[bodyX+bodyW,top+55],[bodyX+bodyW-13,top+64],[bodyX+13,top+64],[bodyX,top+55],[bodyX,top+13]],'#0a1b2c','#86a6b5',2);
+ rect(bodyX+5,top+7,bodyW-10,48,'#38566b','#688ca1',5);
+ rect(bodyX+9,top+11,bodyW-18,40,'#20394c','#85a4ae',4);
+ rect(bodyX+10,top+10,bodyW-20,6,tone,null,2);
+ rect(bodyX+18,top+22,bodyW-36,25,'#081b2b','#88b8c6',3);
+ rect(bodyX+22,top+25,bodyW-44,19,'#6cbbc7');
+ ctx.fillStyle='#14354a';ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='900 10px system-ui';ctx.fillText('BOTTOMLESS',sx,top+35,bodyW-51);ctx.textBaseline='alphabetic';
+ for(const xx of [bodyX+12,bodyX+bodyW-12])for(const yy of [top+20,top+49]){
+  ctx.fillStyle='#c9e0e1';ctx.beginPath();ctx.arc(xx,yy,2,0,Math.PI*2);ctx.fill();
+ }
+ for(let i=0;i<3;i++){rect(bodyX+15+i*10,top+54,6,3,'#b5dae28f',null,1);rect(bodyX+bodyW-21-i*10,top+54,6,3,'#b5dae28f',null,1)}
+ if(tier>=3){for(const side of [-1,1]){rect(sx+side*(bodyW*.44)-4,top+3,8,8,'#d58753','#ffc17e',2)}}
+ if(tier>=5){ctx.strokeStyle='#e0c98c';ctx.lineWidth=2;ctx.strokeRect(bodyX+15,top+18,bodyW-30,34)}
+ if(tier>=7){beam(sx,top+60,60,'#ba9aff40');rect(bodyX+28,top-5,bodyW-56,5,'#bcaff5')}
+ if(tier>=8){path([[sx-18,top-5],[sx-10,top-15],[sx,top-8],[sx+10,top-15],[sx+18,top-5]],'#ffdb9f','#d3b378')}
+ // Impact collar and animated multi-segment steel bit.
+ rect(sx-24,top+60,48,12,'#233e54','#a0c5d2',3);
+ rect(sx-20,top+64,40,4,tone);
+ const tipY=Math.min(ground+1,top+111);
+ path([[sx-25,top+71],[sx+25,top+71],[sx+18,top+82],[sx+11,top+96],[sx,tipY],[sx-11,top+96],[sx-18,top+82]],'#829cae','#cde4e7',1.5);
+ for(let i=0;i<3;i++){
+  const y=top+77+i*9,spread=23-i*6;
+  ctx.strokeStyle=i%2?'#dceef0':'#294e67';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(sx-spread,y+(Math.sin(time*rate()*4*pressure+i)*2));ctx.lineTo(sx+spread,y-3);ctx.stroke();
+ }
+ if(pressure>1.15){
+  const alpha=Math.min(.6,(pressure-1)*.22);
+  beam(sx,tipY,32,'#fbd188'+Math.round(alpha*255).toString(16).padStart(2,'0'));
+  ctx.strokeStyle=tone;ctx.lineWidth=2;ctx.globalAlpha=Math.min(.7,(pressure-1)/2);
+  for(let i=0;i<3;i++){const x=sx+Math.sin(time*4+i*2)*28,y=tipY-5+(i-1)*8;ctx.beginPath();ctx.moveTo(x-3,y+4);ctx.lineTo(x,y-3);ctx.stroke()}
+  ctx.globalAlpha=1;
+ }
+ // Existing particles and coin popups retained, but styled to the new system.
  for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.x+=p.vx;p.y+=p.vy;p.vy+=.16;p.life-=1;ctx.globalAlpha=Math.min(1,p.life/20);ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,p.size,p.size);if(p.life<=0)particles.splice(i,1)}ctx.globalAlpha=1;
- for(let i=texts.length-1;i>=0;i--){let x=texts[i];x.y-=.5;x.life--;ctx.fillStyle='#ffdf91';ctx.font='900 14px system-ui';ctx.textAlign='center';ctx.fillText(x.text,x.x,x.y);if(x.life<=0)texts.splice(i,1)}
- ctx.restore();ctx.fillStyle='#00000025';ctx.fillRect(0,0,W,7);
+ for(let i=texts.length-1;i>=0;i--){const o=texts[i];o.y-=.5;o.life--;if(o.text){ctx.fillStyle='#ffdda0';ctx.font='900 12px system-ui';ctx.textAlign='center';ctx.shadowColor='#07121e';ctx.shadowBlur=4;ctx.fillText(o.text,o.x,o.y);ctx.shadowBlur=0}if(o.life<=0)texts.splice(i,1)}
+ ctx.restore();
 }
+
 function showDialog(title,body,buttons){$('dialogTitle').textContent=title;$('dialogBody').innerHTML=body;const el=$('dialogActions');el.innerHTML='';for(const cfg of buttons){let btn=document.createElement('button');btn.textContent=cfg.text;if(cfg.className)btn.className=cfg.className;btn.addEventListener('click',cfg.click);el.appendChild(btn)}$('dialogScroll').scrollTop=0;$('overlay').classList.add('show');$('dialogClose').focus({preventScroll:true})}
 function close(){ $('overlay').classList.remove('show')}
 function showCollection(){const owned=new Set(s.discoveries);const next=ARTIFACTS.find(a=>!owned.has(a.name));const rows=ARTIFACTS.map((a,i)=>owned.has(a.name)?`<div class="collection-row"><span class="collection-symbol">◆</span><div><strong>${a.name}</strong><div class="small">${a.description} · Found at depth ${a.depth.toLocaleString()}</div></div></div>`:`<div class="collection-row locked"><span class="collection-symbol">◇</span><div><strong>Undiscovered Artifact ${i+1}</strong><div class="small">Explore deeper to uncover it.</div></div></div>`).join('');showDialog('Artifact collection',`<p><strong>${s.discoveries.length} of ${ARTIFACTS.length}</strong> unique artifacts found. Every artifact permanently boosts coins by <strong>+2%</strong>, even after rebuilding. Total collection bonus: <strong>+${s.discoveries.length*2}%</strong>.</p><p>${next?'Next new artifact: around depth <strong>'+next.depth.toLocaleString()+'</strong>.':'You found every artifact in the current collection!'}</p><div class="collection-scroll">${rows}</div>`,[{text:'Keep digging',className:'primary',click:close}])}
@@ -442,7 +561,7 @@ function showMilestones(){
 function showStages(){const now=stageIndex();const rows=DRILL_STAGES.map((x,i)=>`<div class="collection-row ${i<=now?'':'locked'}"><span class="collection-symbol">${i<=now?'✦':'◇'}</span><div><strong>${x.name}</strong><div class="small">Best depth ${x.depth.toLocaleString()} · ${i<=now?'Unlocked':'Locked'}</div></div></div>`).join('');showDialog('Drill evolution',`<p>Your drill changes appearance automatically when you reach a lifetime depth milestone. No equipment screen or purchase required.</p>${artifactTrait('Ancient Star Chart')?'<p>Star Chart preview: your next region is <strong>'+biome(nextRegion(s.depth)).name+'</strong>.</p>':''}<div class="collection-scroll">${rows}</div>`,[{text:'Milestones',click:showMilestones},{text:'Close',click:close}])}
 
 function openLegacy(){location.href='./legacy.html'}
-function showMenu(){showDialog('Game menu',`<p><strong>How to play:</strong> Your drill works automatically and earns coins as it damages rock, plus a bonus when each layer breaks. Buy Power, Speed, and Value upgrades. Tap the mine to build DRILL PRESSURE up to 3× damage. It takes 25 taps to reach 3×. Full pressure holds for 10 seconds after the last tap, then slowly fades to 1× over 60 seconds. POWER SLAM delivers a huge hit every 12 seconds. Dig to depth 110 to unlock optional permanent rebuilds.</p><p><strong>Artifacts:</strong> ${s.discoveries.length} of ${ARTIFACTS.length} found. Each gives +2% permanent coin value. Ore veins every 25 layers and treasure chambers every 100 give extra coins. Random special encounters appear after roughly 4–7 minutes of accumulated active play, and do not tick while away. Tap EVENTS above the mine to view recent finds and the next encounter countdown. Every 25th rock is a visible ore vein, and every 100th rock is a treasure chamber.</p><p><strong>Your progress:</strong> ${s.totalLayers.toLocaleString()} total layers, ${s.rebuilt} rebuilds, ${s.best.toLocaleString()} best depth, ${s.cores} permanent cores.</p><p><strong>Idle progress:</strong> Your machine runs while you're away at 80% speed, without buying upgrades. Progress is saved on this device.</p><p class="small">Clearing browser data or switching phones can erase progress. Export a backup to keep it safe. Your old v0.1 progress remains separate and is available in the legacy game.</p><div class="divider"></div><p class="small">BOTTOMLESS v2.1. 48 collectible specimens, rare encounters and evolving drill designs. No ads, tracking, accounts or purchases.</p>`,[
+function showMenu(){showDialog('Game menu',`<p><strong>How to play:</strong> Your drill works automatically and earns coins as it damages rock, plus a bonus when each layer breaks. Buy Power, Speed, and Value upgrades. Tap the mine to build DRILL PRESSURE up to 3× damage. It takes 25 taps to reach 3×. Full pressure holds for 10 seconds after the last tap, then slowly fades to 1× over 60 seconds. POWER SLAM delivers a huge hit every 12 seconds. Dig to depth 110 to unlock optional permanent rebuilds.</p><p><strong>Artifacts:</strong> ${s.discoveries.length} of ${ARTIFACTS.length} found. Each gives +2% permanent coin value. Ore veins every 25 layers and treasure chambers every 100 give extra coins. Random special encounters appear after roughly 4–7 minutes of accumulated active play, and do not tick while away. Tap EVENTS above the mine to view recent finds and the next encounter countdown. Every 25th rock is a visible ore vein, and every 100th rock is a treasure chamber.</p><p><strong>Your progress:</strong> ${s.totalLayers.toLocaleString()} total layers, ${s.rebuilt} rebuilds, ${s.best.toLocaleString()} best depth, ${s.cores} permanent cores.</p><p><strong>Idle progress:</strong> Your machine runs while you're away at 80% speed, without buying upgrades. Progress is saved on this device.</p><p class="small">Clearing browser data or switching phones can erase progress. Export a backup to keep it safe. Your old v0.1 progress remains separate and is available in the legacy game.</p><div class="divider"></div><p class="small">BOTTOMLESS v2.2. 48 collectible specimens, rare encounters and evolving drill designs. No ads, tracking, accounts or purchases.</p>`,[
 {text:'Close',click:close},{text:'Artifacts',click:showCollection},{text:'Specimens',click:showSpecimens},{text:'Special encounters',click:showEncounters},{text:'Milestones',click:showMilestones},{text:'Drill stages',click:showStages},{text:'Export save',click:exportSave},{text:'Import save',click:importSave},{text:'Old v0.1 game',click:openLegacy},{text:'Start over',className:'danger',click:resetConfirm}])}
 function exportSave(){save();const raw=localStorage.getItem(SAVE_KEY),blob=new Blob([raw],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='bottomless-v2-save.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);close();notify('Save backup exported')}
 function importSave(){let input=document.createElement('input');input.type='file';input.accept='.json,application/json';input.addEventListener('change',async()=>{try{const o=JSON.parse(await input.files[0].text());if(!o||(o.version!==3&&o.version!==4)||!o.up||!Array.isArray(o.coins))throw Error('Invalid save');const old=s;if(!loadObj(o)){s=old;throw Error('Invalid save')}save();close();updateUI();notify('Save restored successfully')}catch(err){notify('Could not import that save file')}});input.click()}
