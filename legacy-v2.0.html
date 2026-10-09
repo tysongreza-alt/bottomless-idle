@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#0a1021">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>BOTTOMLESS | Idle Excavation</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+.collection-scroll{max-height:44vh;overflow-y:auto;margin-top:10px;border:1px solid #385171;border-radius:12px}.collection-row{display:flex;align-items:center;gap:12px;border-bottom:1px solid #2b4461;padding:11px 12px}.collection-row:last-child{border-bottom:0}.collection-row .collection-symbol{font-size:24px;color:#f9d389}.collection-row.locked{opacity:.53}.collection-row.locked .collection-symbol{color:#93a8c4}.collection-row strong{font-size:13px}.collection-row .small{margin-top:3px}.record{appearance:none}
+
+:root{--bg:#070c19;--panel:#101a2f;--panel2:#14213b;--line:#253759;--text:#f1f6ff;--muted:#9ab0ce;--cyan:#5ce5e3;--gold:#ffc969;--purple:#ae91ff;--green:#8af2ad}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-tap-highlight-color:transparent}body{background:radial-gradient(ellipse at top,#1a2d54 0,#0b1224 52%,#070c19 100%);overscroll-behavior-y:contain}button{font:inherit;touch-action:manipulation}button:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}.app{max-width:480px;min-height:100svh;margin:auto;padding:calc(env(safe-area-inset-top) + 13px) 14px calc(env(safe-area-inset-bottom) + 18px);display:flex;flex-direction:column;gap:12px}.top{display:flex;align-items:center;justify-content:space-between;gap:8px}.brand{font-weight:1000;font-size:23px;letter-spacing:.065em;line-height:1;background:linear-gradient(100deg,#fff 5%,#91f5f2 80%);-webkit-background-clip:text;background-clip:text;color:transparent}.tag{font-size:10px;letter-spacing:.18em;color:var(--muted);font-weight:750;margin-top:5px}.menu{width:42px;height:42px;border:1px solid var(--line);background:#162540;color:var(--text);border-radius:13px;font-size:23px}.stats{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:7px}.stat{background:linear-gradient(180deg,#172744,#10192e);border:1px solid #2b4063;padding:10px 10px 9px;border-radius:13px;min-width:0}.stat .label{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:#93a8c4;font-weight:800}.stat .num{font-size:21px;line-height:1.25;font-weight:900;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.stat:first-child .num{color:var(--gold)}.stat:nth-child(2) .num{color:var(--cyan)}.stat:last-child .num{color:var(--purple)}.mine{position:relative;border:1px solid #314b70;border-radius:18px;overflow:hidden;background:#101a30;box-shadow:0 12px 36px #0004,inset 0 0 20px #0005}.scene{display:block;width:100%;height:clamp(235px,34svh,330px)}.mine-bar{position:absolute;top:11px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:center;gap:5px;pointer-events:none}.biome,.record{border:1px solid #ffffff25;background:#081326bd;backdrop-filter:blur(9px);border-radius:20px;padding:6px 9px;font-size:11px;font-weight:850;text-shadow:0 1px 2px #000}.biome{color:#d4eeff}.record{color:#ffe5a7;pointer-events:auto;cursor:pointer;font:inherit;font-size:11px;font-weight:850}.health{position:absolute;bottom:14px;left:17px;right:17px;height:12px;border-radius:20px;background:#060d1abf;overflow:hidden;border:1px solid #bcdafa33;box-shadow:0 3px 14px #0005}.healthfill{height:100%;width:100%;border-radius:20px;background:linear-gradient(90deg,#f79367,#ffcc75);transition:width .12s linear}.healthtext{position:absolute;bottom:30px;left:0;right:0;text-align:center;font-size:10px;font-weight:800;color:#e5efff;text-shadow:0 2px 3px #000}.depth-note{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:11px;padding:0 3px;gap:8px}.progress-track{height:5px;background:#263853;border-radius:10px;overflow:hidden;flex:1}.progress-track span{display:block;height:100%;background:linear-gradient(90deg,#5285ff,#a5f5ff);border-radius:10px;width:0}.action{display:flex;gap:8px;align-items:stretch}.slam{flex:1;position:relative;overflow:hidden;background:linear-gradient(110deg,#ffd16c,#ff9c56);border:0;border-radius:15px;color:#3a230f;min-height:59px;font-size:18px;font-weight:1000;letter-spacing:.04em;box-shadow:0 5px 0 #ad632c,0 11px 22px #0003}.slam:disabled{background:#30415e;color:#acbacd;box-shadow:none}.slam .sub{display:block;font-size:10px;letter-spacing:.025em;font-weight:800;margin-top:2px}.slam:active:not(:disabled){transform:translateY(3px);box-shadow:0 2px 0 #ad632c}.income{min-width:111px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:8px 10px;border-radius:14px;background:#122039;border:1px solid #2c4566}.income b{font-size:16px;color:var(--green);font-variant-numeric:tabular-nums}.income span{font-size:10px;color:#a8c2db}.uphead{display:flex;justify-content:space-between;align-items:center}.uphead strong{font-size:13px;letter-spacing:.1em}.mode{color:#d5e6ff;background:#1b2d4b;border:1px solid #375377;border-radius:10px;padding:8px 10px;font-size:11px;font-weight:850}.upgrades{display:flex;flex-direction:column;gap:8px}.upgrade{width:100%;display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:center;gap:9px;text-align:left;min-height:72px;background:linear-gradient(105deg,#162845,#122037);border:1px solid #355071;border-radius:14px;color:var(--text);padding:10px 11px;box-shadow:0 3px 0 #08101f}.upgrade:active:not(:disabled){transform:translateY(2px);box-shadow:0 1px 0 #08101f}.upgrade:disabled{opacity:.56}.upgrade.afford{border-color:#61c3a7;box-shadow:inset 0 0 15px #51b0a30c,0 3px 0 #08101f}.upico{width:42px;height:42px;background:#263c60;border:1px solid #43618b;border-radius:12px;display:grid;place-items:center;font-size:22px}.upname{font-weight:900;font-size:14px}.upinfo{font-size:11px;color:#9cb5d6;margin-top:4px}.upprice{text-align:right;font-size:14px;font-weight:900;color:var(--gold);white-space:nowrap}.upprice span{display:block;font-size:10px;color:var(--muted);font-weight:700;margin-top:5px}.footer{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#8ea3c1;gap:8px}.rebuild{border-radius:11px;border:1px solid #a286ff88;color:#dbccff;background:#362653;padding:9px 12px;font-weight:850;font-size:11px}.rebuild:disabled{opacity:.4}.toast{position:fixed;z-index:3;left:50%;top:calc(env(safe-area-inset-top) + 85px);transform:translateX(-50%) translateY(-20px);opacity:0;pointer-events:none;max-width:min(420px,92vw);padding:11px 16px;background:#e7f9ff;color:#152a47;border-radius:13px;box-shadow:0 10px 36px #0007;font-weight:850;font-size:12px;text-align:center;transition:opacity .23s,transform .23s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.overlay{position:fixed;inset:0;background:#000c;display:none;z-index:5;align-items:center;justify-content:center;padding:20px}.overlay.show{display:flex}.dialog{width:min(100%,430px);max-height:86svh;overflow:auto;background:linear-gradient(180deg,#1c3050,#10192d);border:1px solid #4a6286;border-radius:22px;padding:22px;box-shadow:0 22px 70px #000a}.dialog h2{margin:0 0 9px;font-size:23px}.dialog p{color:#c3d3e9;font-size:14px;line-height:1.55}.dialog strong{color:#fff}.dialog-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}.dialog button{border:1px solid #426286;background:#263b5b;color:#fff;padding:12px 15px;border-radius:12px;font-size:13px;font-weight:850}.dialog .primary{background:#9d8bff;border-color:#ad9cff;color:#171128}.dialog .danger{background:#613347;border-color:#9e5978}.divider{height:1px;background:#4760806e;margin:15px 0}.small{font-size:12px!important;color:#9fb3ce!important}.banners{display:flex;justify-content:space-between;gap:7px;align-items:center}.cores{font-size:11px;color:#cbbdff;font-weight:800}.save{font-size:10px;color:#8097b6}@media(max-height:710px){.app{gap:8px}.scene{height:clamp(285px,44svh,320px)}.upgrade{min-height:64px}.stat{padding:8px 9px}.slam{min-height:54px}}@media(prefers-reduced-motion:reduce){.healthfill,.toast{transition:none!important}}@media(max-width:350px){.stat .num{font-size:17px}.income{min-width:95px}.upname{font-size:12px}.upprice{font-size:12px}.brand{font-size:21px}}@media(min-width:520px){.app{padding-top:25px;padding-bottom:24px}}
+/* Active play: one optional hit target inside the mine, without introducing another menu. */
+.mine{cursor:pointer;touch-action:manipulation}
+.pressure-panel{display:flex;align-items:center;gap:12px;background:#10203a;border:1px solid #334f73;border-radius:14px;padding:10px 13px;touch-action:manipulation;cursor:pointer;user-select:none;-webkit-user-select:none}
+.pressure-label{font-size:11px;font-weight:850;letter-spacing:.09em;color:#bed1ee;white-space:nowrap}
+.pressure-value{font-size:22px;font-weight:950;color:#75e2f5;min-width:48px;text-align:right;font-variant-numeric:tabular-nums}
+.pressure-track{flex:1;min-width:35px;background:#243652;border-radius:100px;height:13px;overflow:hidden;border:1px solid #446080}
+.pressure-fill{height:100%;width:0%;border-radius:100px;background:linear-gradient(90deg,#47b6e4,#82f2dc,#ffd379);transition:width .12s linear}
+.pressure-hint{font-size:10px;color:#97afcc;letter-spacing:.02em}
+.pressure-panel:active{border-color:#82e7de}
+@media(max-width:370px){.pressure-panel{gap:7px;padding:9px}.pressure-label{font-size:10px}.pressure-value{font-size:19px;min-width:42px}}
+
+/* v1.3: All primary play controls stay visible together on ordinary phones. */
+.app{gap:6px;padding:calc(env(safe-area-inset-top) + 6px) 10px calc(env(safe-area-inset-bottom) + 5px)}
+.top{min-height:36px}.brand{font-size:20px;letter-spacing:.055em}.tag{font-size:8px;margin-top:3px;letter-spacing:.15em}.menu{height:36px;width:36px;border-radius:11px;font-size:21px}
+.stats{gap:6px}.stat{padding:5px 8px 6px;border-radius:10px}.stat .label{font-size:9px}.stat .num{font-size:20px;line-height:1.17}
+.scene{height:clamp(164px,24.5svh,222px)}.mine{border-radius:13px}.mine-bar{top:8px;left:9px;right:9px}.biome{font-size:10px;padding:5px 9px}.healthtext{bottom:23px;font-size:9px}.health{bottom:9px;left:11px;right:11px;height:9px}
+.pressure-panel{min-height:36px;padding:5px 10px;border-radius:10px;gap:9px}.pressure-label{font-size:10px}.pressure-hint{font-size:9px}.pressure-value{font-size:19px;min-width:42px}.pressure-track{height:10px}
+.perks{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.perk{min-width:0;min-height:43px;text-align:left;display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:2px;background:linear-gradient(140deg,#1b2c4a,#111f38);border:1px solid #395574;border-radius:11px;color:#dbeeff;padding:5px 9px;cursor:pointer}
+.perk:active{border-color:#8ce3e2;background:#254469}.perk-title{font-size:10px;line-height:1.2;font-weight:800;letter-spacing:.035em;display:flex;justify-content:space-between;gap:6px}.perk-title b{color:#ffe0a5}.perk-detail{font-size:10px;line-height:1.2;color:#96e6cb;font-weight:800;white-space:nowrap;letter-spacing:-.01em}
+.depth-note{font-size:10px;min-height:16px;padding:0 2px;gap:6px}.next-core{flex-shrink:0;background:none;border:0;color:#dabfff;font-size:10px;font-weight:850;padding:0;white-space:nowrap}.progress-track{min-width:20px;flex:1}
+.action{gap:6px}.slam{min-height:48px;font-size:15px;border-radius:12px}.slam .sub{font-size:10px}.income{min-width:105px;padding:5px 7px;border-radius:12px}.income b{font-size:15px}.income span{font-size:8px}
+.uphead strong{font-size:11px;letter-spacing:.09em}.mode{padding:5px 8px;border-radius:9px;font-size:10px}
+.upgrades{gap:5px}.upgrade{min-height:51px;grid-template-columns:35px minmax(0,1fr) auto;gap:8px;padding:6px 9px;border-radius:11px}.upico{width:34px;height:34px;border-radius:9px;font-size:19px}.upname{font-size:12px}.upinfo{font-size:10px;margin-top:2px}.upprice{font-size:13px}.upprice span{font-size:9px;margin-top:1px}
+.rebuild{padding:6px 9px;font-size:10px;border-radius:9px}.save{font-size:10px}.footer{font-size:9px}
+.dialog{max-height:min(88svh,720px);display:flex;flex-direction:column;overflow:hidden;padding:0;border-radius:18px}
+.dialog-head{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 16px 10px;background:linear-gradient(180deg,#263b5d,#1b3050);border-bottom:1px solid #385072}
+.dialog-head h2{margin:0;font-size:21px;line-height:1.2;min-width:0}
+.dialog-close{width:39px;height:39px;flex-shrink:0;display:grid;place-items:center;background:#152540;color:#f2f8ff;border:1px solid #617ca3;border-radius:11px;font-size:28px;line-height:1;cursor:pointer}
+.dialog-close:active{background:#36567e}.dialog-scroll{min-height:0;overflow:auto;padding:12px 16px 16px;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.dialog-actions{margin-top:14px}
+@media(max-height:760px){.app{gap:4px}.scene{height:clamp(140px,23svh,180px)}.stat{padding:4px 7px}.stat .num{font-size:18px}.upgrade{min-height:47px;padding:4px 8px}.upico{width:31px;height:31px}.pressure-panel{min-height:33px}.perk{min-height:40px}.slam{min-height:44px}.banners{min-height:22px}}
+@media(max-width:355px){.app{padding-left:8px;padding-right:8px}.perk{padding:5px 6px}.perk-detail{font-size:9px}.upgrade{gap:6px}.upinfo{font-size:9px}.income{min-width:92px}.pressure-panel{gap:6px}.pressure-value{font-size:17px}}
+@media(prefers-reduced-motion:reduce){.pressure-fill{transition:none}}
+
+.event-flash{position:absolute;z-index:3;top:34%;left:14%;right:14%;display:none;pointer-events:none;text-align:center;background:linear-gradient(120deg,#09152cee,#1c3353ee);border:1px solid #a8d2ed;border-radius:12px;padding:9px 12px;box-shadow:0 6px 26px #0008}
+.event-flash.show{display:flex;flex-direction:column;gap:2px;animation:event-in .22s ease-out}.event-flash strong{font-size:13px;letter-spacing:.08em}.event-flash span{font-size:11px;color:#f0f8ff}
+@keyframes event-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.archive-heading{font-size:12px;letter-spacing:.08em;color:#99dddf;margin:15px 0 6px}.archive-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.archive-card{border:1px solid #365174;border-radius:12px;padding:10px;background:#132641;min-width:0}.archive-card.locked{opacity:.53}.archive-card b{display:block;font-size:12px}.archive-card small{color:#b4c9df;font-size:10px;overflow-wrap:anywhere}.archive-glyph{display:block;font-size:19px;margin-bottom:4px;font-weight:800;color:#a4e4e7}.archive-card.locked .archive-glyph{color:#a1a8bb}
+@media(prefers-reduced-motion:reduce){.event-flash.show{animation:none}}
+</style>
+</head>
+<body>
+<main class="app">
+  <header class="top"><div><div class="brand">BOTTOMLESS</div><div class="tag">DIG DEEP. GET RICH.</div></div><button class="menu" id="menuBtn" aria-label="Open game menu">☰</button></header>
+  <div class="stats"><div class="stat"><div class="label">◈ Coins</div><div class="num" id="coins">0</div></div><div class="stat"><div class="label">↧ Depth</div><div class="num" id="depth">0</div></div><div class="stat"><div class="label">✦ Best</div><div class="num" id="best">0</div></div></div>
+  <section class="mine" aria-label="Live animated mine. Tap to increase drill pressure."><canvas id="scene" class="scene"></canvas><div class="mine-bar"><span class="biome" id="biome">Surface Soil</span></div><div id="eventFlash" class="event-flash" aria-live="polite"></div><div class="healthtext" id="healthText">Next layer</div><div class="health"><div class="healthfill" id="healthFill"></div></div></section>
+  <div id="pressurePad" class="pressure-panel" role="button" tabindex="0" aria-label="Tap to build drill pressure, maximum 3 times damage"><div><div class="pressure-label">DRILL PRESSURE</div><div id="pressureHint" class="pressure-hint">TAP THE MINE TO BOOST</div></div><div class="pressure-track"><div id="pressureFill" class="pressure-fill"></div></div><span id="pressureValue" class="pressure-value">1.0×</span></div>
+  <div class="perks" aria-label="Permanent bonuses">
+    <button type="button" id="treasure" class="perk" aria-label="View artifact collection"><span class="perk-title">◆ ARTIFACTS <b id="artifactCount">0/22</b></span><span class="perk-detail" id="artifactBonus">+0% COINS</span></button>
+    <button type="button" id="corePanel" class="perk" aria-label="View permanent cores and rebuild bonuses"><span class="perk-title">✦ CORES <b id="coreCount">0</b></span><span class="perk-detail" id="coreBonus">+0% DMG · +0% COINS</span></button>
+  </div>
+  <div class="depth-note"><span id="nextMilestone">Next region: 40</span><div class="progress-track"><span id="milestoneFill"></span></div><button type="button" class="next-core" id="nextCoreBtn">Next core: 110</button></div>
+  <div class="action"><button id="slamBtn" class="slam" disabled>POWER SLAM<span class="sub" id="slamText">Charging…</span></button><div class="income"><b id="income">+0 / sec</b><span>MINING COINS / SEC</span></div></div>
+  <div class="uphead"><strong>UPGRADE THE DRILL</strong><button id="modeBtn" class="mode">BUY ×1 ▾</button></div>
+  <div class="upgrades">
+    <button class="upgrade" data-upgrade="power"><div class="upico">⚒</div><div><div class="upname">POWER <span id="lvlpower"></span></div><div class="upinfo" id="descPower">Bigger hits</div></div><div class="upprice" id="pricepower">15<span>COINS</span></div></button>
+    <button class="upgrade" data-upgrade="speed"><div class="upico">⚡</div><div><div class="upname">SPEED <span id="lvlspeed"></span></div><div class="upinfo" id="descSpeed">More hits per second</div></div><div class="upprice" id="pricespeed">25<span>COINS</span></div></button>
+    <button class="upgrade" data-upgrade="value"><div class="upico">◆</div><div><div class="upname">VALUE <span id="lvlvalue"></span></div><div class="upinfo" id="descValue">More coins per layer</div></div><div class="upprice" id="pricevalue">35<span>COINS</span></div></button>
+  </div>
+  <div class="banners"><button class="rebuild" id="rebuildBtn" disabled>✦ REBUILD MACHINE</button><span class="save" id="saved">Autosave on</span></div>
+  <div class="footer"><span>Offline play · Saved on device</span><span>v2.0</span></div>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="overlay" id="overlay"><div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"><div class="dialog-head"><h2 id="dialogTitle"></h2><button type="button" class="dialog-close" id="dialogClose" aria-label="Close menu">×</button></div><div class="dialog-scroll" id="dialogScroll"><div id="dialogBody"></div><div class="dialog-actions" id="dialogActions"></div></div></div></div>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id), SAVE_KEY='bottomless_idle_v3', OLD_SAVE_KEY='bottomless_idle_v1', BACKUP_KEY='bottomless_idle_v14_backup', H=1.13, R=1.09;
+class Big {
+ constructor(m=0,e=0){if(!(m>0)||!Number.isFinite(m)){this.m=0;this.e=0;return}let shift=Math.floor(Math.log10(m));this.m=m/Math.pow(10,shift);this.e=e+shift;if(this.m>=10){this.m/=10;this.e++}if(this.m<1){this.m*=10;this.e--}}
+ static num(n){if(n instanceof Big)return n;return new Big(n)}
+ static log(l){if(!Number.isFinite(l))return new Big();let e=Math.floor(l);return new Big(Math.pow(10,l-e),e)}
+ static pow(base,p){return Big.log(Math.log10(base)*p)}
+ static read(v){if(Array.isArray(v)&&v.length===2)return new Big(Number(v[0]),Number(v[1]));return Big.num(Number(v)||0)}
+ pack(){return [this.m,this.e]}
+ cmp(b){b=Big.num(b);if(this.m===0||b.m===0)return Math.sign(this.m-b.m);return this.e===b.e?Math.sign(this.m-b.m):Math.sign(this.e-b.e)}
+ add(b){b=Big.num(b);if(!this.m)return b;if(!b.m)return this;let a=this;if(b.e>a.e)[a,b]=[b,a];if(a.e-b.e>16)return a;return new Big(a.m+b.m*Math.pow(10,b.e-a.e),a.e)}
+ sub(b){b=Big.num(b);if(this.cmp(b)<=0)return new Big();if(this.e-b.e>16)return this;return new Big(this.m-b.m*Math.pow(10,b.e-this.e),this.e)}
+ mul(b){b=Big.num(b);return new Big(this.m*b.m,this.e+b.e)}
+ div(b){b=Big.num(b);return b.m?new Big(this.m/b.m,this.e-b.e):new Big()}
+ number(){if(this.e>307)return Infinity;if(this.e< -300)return 0;return this.m*Math.pow(10,this.e)}
+ log10(){return this.m?Math.log10(this.m)+this.e:-Infinity}
+ fmt(d=1){if(!this.m)return '0';if(this.e<3){const n=this.number();return n>=100?n.toFixed(0):n>=10?n.toFixed(1):n.toFixed(d)}const suffix=['','K','M','B','T','Qa','Qi','Sx','Sp','Oc','No','Dc','Ud','Dd','Td','Qad','Qid','Sxd','Spd','Ocd','Nod'];const group=Math.floor(this.e/3);if(group<suffix.length){const val=this.m*Math.pow(10,this.e%3);return (val>=100?val.toFixed(0):val>=10?val.toFixed(1):val.toFixed(2)).replace(/\.0+$/,'').replace(/(\.\d*[1-9])0+$/,'$1')+suffix[group]}return this.m.toFixed(2)+'e'+this.e}
+}
+const b=n=>Big.num(n), pow=(r,e)=>Big.pow(r,e);
+function fresh(){const now=Date.now();return {version:4,coins:b(0),depth:0,best:0,hp:null,up:{power:0,speed:0,value:0},cores:0,legacyCoreOffset:0,rebuilt:0,slams:0,discoveries:[],totalLayers:0,created:now,lastSave:now,seed:(now>>>0)^0x9e3779b9,encounterIndex:0,encounterElapsed:0,encounterGross:b(0),encounterCount:0,vaultCount:0,oreCount:0,activeSeconds:0,specimens:[],duplicateStreak:0,pendingFinds:[]}}
+let s=fresh(), mode='1', lastFrame=performance.now(), lastUi=0, lastSave=Date.now(), hitAcc=0, lastSlam=Date.now()-12000, slamCharge=0, pressure=1, lastPressureTap=0, lastPressureInput=0, particles=[],texts=[],shake=0, anim=0, toastTimer, eventTimer, visible=true;
+const STARTS=[0,40,100,200,350,550], BIOMES=[{name:'Surface Soil',top:'#594431',bottom:'#8f6143',accent:'#dec295',gem:'#edc58d'},{name:'Iron Slate',top:'#37475b',bottom:'#566d7d',accent:'#a0d0e5',gem:'#9ec6fa'},{name:'Ember Caverns',top:'#5b2c36',bottom:'#9b4b32',accent:'#f6a65a',gem:'#ff8a51'},{name:'Crystal Deep',top:'#263c62',bottom:'#365b8b',accent:'#c197ff',gem:'#8ff9fc'},{name:'Lost Ruins',top:'#4c4059',bottom:'#777074',accent:'#d7c69a',gem:'#ffe3a5'},{name:'The Deep Unknown',top:'#191c40',bottom:'#463a73',accent:'#ac7bff',gem:'#e298fa'},{name:'Subterranean Ocean',top:'#083955',bottom:'#145772',accent:'#69d9ef',gem:'#8bf9ff'},{name:'Starfall Veins',top:'#27335e',bottom:'#684c86',accent:'#f0b8fd',gem:'#ffe1ff'},{name:'Ancient Reactor',top:'#304b3d',bottom:'#677644',accent:'#deff78',gem:'#c9ffb2'}];
+const biomeId=d=>{if(d<550){let i=0;while(i<STARTS.length-1&&d>=STARTS[i+1])i++;return i}return 5+Math.floor((d-550)/300)%4}, biome=d=>BIOMES[biomeId(d)];
+const ARTIFACTS=[
+ {depth:25,name:'Amber Firefly',description:'A tiny insect suspended in honey-colored amber.'},
+ {depth:55,name:'Iron Rose',description:'A metal flower buried beneath the oldest slate.'},
+ {depth:90,name:'Smoldering Crown',description:'Still warm, though nobody knows who wore it.'},
+ {depth:130,name:'Crystal Heart',description:'Its pulse can be felt through solid stone.'},
+ {depth:180,name:'Forgotten Compass',description:'It points to something far below.'},
+ {depth:245,name:'Clockwork Beetle',description:'An ancient machine that still twitches.'},
+ {depth:325,name:'Sunken Pearl',description:'Glows with the memory of an underground sea.'},
+ {depth:415,name:'Whispering Geode',description:'A crystal that softly hums when opened.'},
+ {depth:520,name:'The Stone Dragon',description:'A fossil unlike any creature ever recorded.'},
+ {depth:650,name:'Void Lantern',description:'Its purple light casts no shadows.'},
+ {depth:790,name:'Ancient Star Chart',description:'A map of constellations that no longer exist.'},
+ {depth:950,name:'Reactor Key',description:'Made for a machine that predates civilization.'},
+ {depth:1130,name:'Eternal Ember',description:'A flame that burns without consuming fuel.'},
+ {depth:1350,name:'Gravity Marble',description:'Impossible to drop, impossible to explain.'},
+ {depth:1600,name:'Diamond Seed',description:'A gemstone with roots instead of facets.'},
+ {depth:1900,name:'The First Drill Bit',description:'Someone reached these depths long before you.'},
+ {depth:2250,name:'Timeglass Hour',description:'The sand falls upward, one grain at a time.'},
+ {depth:2700,name:'Bottomless Emblem',description:'An insignia engraved with the words: KEEP DIGGING.'},
+ {depth:3400,name:'Echo of the Surface',description:'A perfect miniature of the world above.'},
+ {depth:4400,name:'The Deepest Bell',description:'A bell that rings without being struck.'},
+ {depth:5800,name:'Living Meteorite',description:'A fallen star that is still growing.'},
+ {depth:7600,name:'Endless Map',description:'A map that grows each time it is unfolded.'}
+];
+
+// BOTTOMLESS 2.0 catalogue: 48 fixed, non-tradable specimens. No consumables or inventory management.
+const SPECIMEN_FAMILIES=[
+ {title:'Shallow Earth',start:0,items:['Fossil Fern','Quartz Nest','Tin Beetle','Amber Seed','Buried Lantern Glass','Stone Coin','River Bone','Ash Feather']},
+ {title:'Iron and Ember',start:110,items:['Rusted Sundial','Ember Egg','Mineral Shell','Redglass Fragment',"Miner's Token",'Cinder Lily','Cobalt Slag','Furnace Skull']},
+ {title:'Crystal and Ruins',start:350,items:['Blue Prism','Humming Fossil','Clockwork Wing','Ancient Seal','Pearl Gear','Broken Oracle Lens','Mirror Quartz','Lost City Tile']},
+ {title:'Deep Ocean',start:650,items:['Coral Clock','Abyssal Shell','Black Salt Rose','Tide Pearl','Glass Eel Fossil','Saltwater Compass','Pressure Opal','Sunken Reliquary']},
+ {title:'Starfall',start:950,items:['Star Iron Flake','Orbit Stone','Violet Meteor Glass','Constellation Pin','Radiant Shard','Nebula Feather','Lunar Fossil','Pulsar Quartz']},
+ {title:'Unknown Depths',start:1600,items:['Echo Relic','Impossible Spindle','Hollow Star','Memory Pebble','Phase Stone','Living Alloy','Void Chrysalis','Endless Knot']}
+];
+const SPECIMENS=SPECIMEN_FAMILIES.flatMap((f,k)=>f.items.map((name,i)=>({id:`S${String(k*8+i+1).padStart(2,'0')}`,name,family:k})));
+const SPECIMEN_BY_ID=new Map(SPECIMENS.map(o=>[o.id,o]));
+const DRILL_STAGES=[{depth:0,name:'Utility Drill'},{depth:40,name:'Iron Borer'},{depth:110,name:'Deepcore Rig'},{depth:200,name:'Ember Crusher'},{depth:350,name:'Crystal Cutter'},{depth:550,name:'Relic Excavator'},{depth:950,name:'Abyss Engine'},{depth:1600,name:'Starbreaker'},{depth:3000,name:'Endless Machine'}];
+const ACHIEVEMENTS=[
+ {name:'First Excavation',desc:'Reach depth 25',check:()=>s.best>=25},
+ {name:'Reinforced',desc:'Complete your first rebuild',check:()=>s.rebuilt>=1},
+ {name:'Core Keeper',desc:'Own 12 permanent cores',check:()=>s.cores>=12},
+ {name:'Deep Historian',desc:'Find five artifacts',check:()=>s.discoveries.length>=5},
+ {name:'One of a Kind',desc:'Find a rare specimen',check:()=>s.specimens.length>=1},
+ {name:'Vault Breaker',desc:'Discover three ancient vaults',check:()=>s.vaultCount>=3},
+ {name:'New Horizons',desc:'Reach depth 550',check:()=>s.best>=550},
+ {name:'Master Excavator',desc:'Reach depth 1000',check:()=>s.best>=1000},
+ {name:'Deep Collector',desc:'Find 12 specimens',check:()=>s.specimens.length>=12},
+ {name:'Encounter Veteran',desc:'Witness 100 underground encounters',check:()=>s.encounterCount>=100}
+];
+// Deterministic signed-free PRNG: a saved seed + event index gives repeatable outcomes.
+function seededUnit(index,salt=0){let z=(s.seed+Math.imul(index+1,0x9e3779b1)+Math.imul(salt+1,0x85ebca6b))>>>0;z^=z>>>16;z=Math.imul(z,0x7feb352d);z^=z>>>15;z=Math.imul(z,0x846ca68b);z^=z>>>16;return (z>>>0)/4294967296}
+function nextEncounterInterval(){return 240+180*seededUnit(s.encounterIndex,5)}
+function stageIndex(depth=s.best){let idx=0;for(let i=1;i<DRILL_STAGES.length;i++)if(depth>=DRILL_STAGES[i].depth)idx=i;return idx}
+function effectiveCoreCount(c){return c<=12?c:12+(4/3)*(Math.pow(c-11,.75)-1)}
+function effectiveCores(){return effectiveCoreCount(s.cores)+(s.legacyCoreOffset||0)}
+function artifactTrait(name){return s.discoveries.includes(name)}
+function artifactCoinTrait(){return (artifactTrait('Crystal Heart')?0.01:0)+(artifactTrait('Diamond Seed')?0.01:0)}
+function artifactDamageTrait(){return (artifactTrait('Iron Rose')?.01:0)+(artifactTrait('Reactor Key')?.01:0)+(artifactTrait('The First Drill Bit')?.01:0)}
+function artifactSpeedTrait(){return (artifactTrait('Clockwork Beetle')?.005:0)+(artifactTrait('Gravity Marble')?.005:0)}
+function oreTrait(){return (artifactTrait('Amber Firefly')?.01:0)+(artifactTrait('Whispering Geode')?.01:0)+(artifactTrait('Living Meteorite')?.01:0)}
+function treasureTrait(){return artifactTrait('Sunken Pearl')?.02:0}
+function slamTrait(){return (artifactTrait('Smoldering Crown')?.02:0)+(artifactTrait('The Stone Dragon')?.02:0)+(artifactTrait('The Deepest Bell')?.02:0)}
+function specimenEligible(){return SPECIMENS.filter(o=>SPECIMEN_FAMILIES[o.family].start<=s.best)}
+function awardSpecimen(index,source,offline=false){
+ const eligible=specimenEligible();if(!eligible.length)return null;
+ const owned=new Set(s.specimens.map(x=>x.id));
+ let pool=eligible.filter(x=>x.family===Math.max(...eligible.map(z=>z.family)));
+ if(seededUnit(index,61)<.25)pool=eligible;
+ if(s.duplicateStreak>=6&&eligible.some(x=>!owned.has(x.id)))pool=eligible.filter(x=>!owned.has(x.id));
+ const item=pool[Math.min(pool.length-1,Math.floor(seededUnit(index,62)*pool.length))];
+ if(owned.has(item.id)){s.duplicateStreak++;return null}
+ s.specimens.push({id:item.id,depth:s.depth,source});s.duplicateStreak=0;
+ if(offline)s.pendingFinds.push(item.id);else flashEvent('RARE FIND',item.name,'#a8e5ef');
+ return item;
+}
+function flashEvent(title,detail,color='#ffd57b'){
+ const el=$('eventFlash');el.innerHTML='';
+ const h=document.createElement('strong');h.textContent=title;h.style.color=color;
+ const p=document.createElement('span');p.textContent=detail;
+ el.append(h,p);el.classList.add('show');
+ clearTimeout(eventTimer);eventTimer=setTimeout(()=>el.classList.remove('show'),2400);
+}
+function encounterTick(seconds,gross){
+ if(seconds<=0)return;
+ s.encounterGross=s.encounterGross.add(gross);s.activeSeconds+=seconds;
+ s.encounterElapsed+=seconds;
+ for(let i=0;i<3&&s.encounterElapsed>=nextEncounterInterval();i++){
+  const interval=nextEncounterInterval();s.encounterElapsed-=interval;
+  const roll=seededUnit(s.encounterIndex,8);
+  const kind=roll<.65?0:roll<.93?1:2;
+  const factor=[.04,.09,.20][kind];
+  const grossWindow=s.encounterGross;s.encounterGross=b(0);
+  const reward=grossWindow.mul(factor);
+  s.coins=s.coins.add(reward);s.encounterCount++;
+  if(kind===2)s.vaultCount++;
+  const index=s.encounterIndex++;
+  const labels=['SPARK SEAM','BURIED CACHE','ANCIENT VAULT'];
+  flashEvent(labels[kind],`+${reward.fmt()} bonus coins`,kind===2?'#d0a5ff':'#ffd57b');
+  shake=Math.min(15,shake+(kind===2?13:kind===1?7:4));hitParticles('');
+  if(kind>0){const chance=kind===1?.30:.60;if(seededUnit(index,12)<chance)awardSpecimen(index+500000,'Underground encounter')}
+  save();
+ }
+}
+// Guaranteed discoveries only at NEW lifetime best-depth nodes, even while offline.
+const SPECIMEN_NODES=[160,440,775,1300,2000,3100,4500,6300,8500];
+function unlockSpecimenNodes(oldBest,newBest,offline){for(const d of SPECIMEN_NODES){if(d>oldBest&&d<=newBest){awardSpecimen(d+100000,'Depth '+d,offline)}}}
+
+const artifactNames=new Set(ARTIFACTS.map(a=>a.name));
+const collectionBonus=()=>1+s.discoveries.length*.02;
+const coreBonus=()=>pow(1.20,Math.min(effectiveCores(),100000));
+const coreCoinBonus=()=>pow(1.15,Math.min(effectiveCores(),100000));
+const nextRegion=d=>{for(const v of STARTS)if(v>d)return v;return 550+(Math.floor(Math.max(0,d-550)/300)+1)*300};
+function hpAt(depth){return b(20).mul(pow(H,depth))}
+function rewardAt(depth){return b(7).mul(pow(R,depth)).mul(pow(1.28,s.up.value)).mul(collectionBonus()).mul(coreCoinBonus()).mul(1+artifactCoinTrait())}
+function dmg(){return b(10).mul(pow(1.28,s.up.power)).mul(coreBonus()).mul(1+artifactDamageTrait())}
+function rate(){return (1+s.up.speed*.20)*(1+artifactSpeedTrait())}
+function dps(){return dmg().mul(rate())}
+function price(which,lvl=s.up[which]){const x={power:[15,1.70],speed:[25,1.55],value:[35,1.74]}[which];return b(x[0]).mul(pow(x[1],lvl))}
+function geo(first,r,n){if(n<=0)return b(0);return first.mul(pow(r,n).sub(1)).div(r-1)}
+function bonusSum(start,n,step,extra){if(!n)return b(0);const finish=start+n-1;const first=Math.ceil(start/step)*step;if(first>finish)return b(0);const count=Math.floor((finish-first)/step)+1;return geo(rewardAt(first),Math.pow(R,step),count).mul(extra)}
+function layerPayout(depth){const value=rewardAt(depth),num=depth+1;let bonus=1;if(num%25===0)bonus+=3*(1+oreTrait());if(num%100===0)bonus+=12*(1+treasureTrait());return value.mul(bonus)}
+function summedPayout(start,n){let v=geo(rewardAt(start),R,n);const a=start+1,z=start+n;for(const [step,extra] of [[25,3*(1+oreTrait())],[100,12*(1+treasureTrait())]]){const first=Math.ceil(a/step)*step;if(first>z)continue;const count=Math.floor((z-first)/step)+1;v=v.add(geo(rewardAt(first-1),Math.pow(R,step),count).mul(extra))}return v}
+function save(){try{const data={version:4,coins:s.coins.pack(),depth:s.depth,best:s.best,hp:(s.hp||hpAt(s.depth)).pack(),up:s.up,cores:s.cores,legacyCoreOffset:s.legacyCoreOffset,rebuilt:s.rebuilt,slams:s.slams,discoveries:s.discoveries,totalLayers:s.totalLayers,created:s.created,lastSave:Date.now(),seed:s.seed,encounterIndex:s.encounterIndex,encounterElapsed:s.encounterElapsed,encounterGross:s.encounterGross.pack(),encounterCount:s.encounterCount,vaultCount:s.vaultCount,oreCount:s.oreCount,activeSeconds:s.activeSeconds,specimens:s.specimens,duplicateStreak:s.duplicateStreak,pendingFinds:s.pendingFinds};localStorage.setItem(SAVE_KEY,JSON.stringify(data));lastSave=Date.now();$('saved').textContent='Saved locally'}catch(err){$('saved').textContent='Save unavailable'}}
+function clampInt(v,max=1000000000){return Math.max(0,Math.min(max,Math.floor(Number(v)||0)))}
+function loadObj(o){
+ if(!o||(o.version!==3&&o.version!==4)||!o.up)return false;
+ if(!Array.isArray(o.coins)||o.coins.length!==2||!o.coins.every(Number.isFinite))return false;
+ const t=fresh();t.coins=Big.read(o.coins);t.depth=clampInt(o.depth);t.best=Math.max(t.depth,clampInt(o.best));t.hp=Big.read(o.hp);if(!t.hp.m||t.hp.cmp(hpAt(t.depth))>0)t.hp=hpAt(t.depth);
+ for(const k of ['power','speed','value'])t.up[k]=clampInt(o.up[k],100000);
+ t.cores=clampInt(o.cores,100000);t.rebuilt=clampInt(o.rebuilt,100000);t.slams=clampInt(o.slams);
+ t.discoveries=Array.isArray(o.discoveries)?[...new Set(o.discoveries.filter(x=>artifactNames.has(x)))]:[];
+ t.totalLayers=Math.max(t.depth,clampInt(o.totalLayers,Number.MAX_SAFE_INTEGER));t.created=Number(o.created)||Date.now();t.lastSave=Math.min(Date.now(),Math.max(0,Number(o.lastSave)||Date.now()));
+ if(o.version===3){t.legacyCoreOffset=Math.max(0,t.cores-effectiveCoreCount(t.cores));}
+ else{
+  t.legacyCoreOffset=Math.max(0,Math.min(100000,Number(o.legacyCoreOffset)||0));
+  t.seed=(Number(o.seed)>>>0)||t.seed;t.encounterIndex=clampInt(o.encounterIndex);t.encounterElapsed=Math.max(0,Math.min(420,Number(o.encounterElapsed)||0));
+  t.encounterGross=Big.read(o.encounterGross);t.encounterCount=clampInt(o.encounterCount);t.vaultCount=clampInt(o.vaultCount);t.oreCount=clampInt(o.oreCount);
+  t.activeSeconds=Math.max(0,Math.min(1e10,Number(o.activeSeconds)||0));
+  t.specimens=Array.isArray(o.specimens)?o.specimens.filter((x,i,a)=>x&&SPECIMEN_BY_ID.has(x.id)&&a.findIndex(z=>z&&z.id===x.id)===i).slice(0,48).map(x=>({id:x.id,depth:clampInt(x.depth),source:String(x.source||'Unknown').slice(0,100)})):[];
+  t.duplicateStreak=clampInt(o.duplicateStreak,50);t.pendingFinds=Array.isArray(o.pendingFinds)?o.pendingFinds.filter(id=>SPECIMEN_BY_ID.has(id)).slice(0,48):[];
+ }
+ s=t;
+ if(o.version===3){for(const d of SPECIMEN_NODES){if(d<=s.best){const relic=awardSpecimen(d+100000,'Earlier depth '+d,true);if(relic)s.specimens[s.specimens.length-1].depth=d}}}
+ return true;
+}
+function layerEffects(count, offline){if(offline)return;shake=Math.min(20,shake+4+Math.min(8,count));const W=canvas.clientWidth,Hh=canvas.clientHeight;const bg=biome(s.depth);for(let i=0;i<Math.min(25,10+count*2);i++){const a=Math.random()*Math.PI*2,v=1+Math.random()*4;particles.push({x:W*.5+(Math.random()-.5)*100,y:Hh*.56,vx:Math.cos(a)*v,vy:Math.sin(a)*v-2,life:30+Math.random()*25,color:Math.random()>.6?bg.gem:bg.accent,size:2+Math.random()*5})}particles=particles.slice(-140);texts.push({x:W*.55,y:Hh*.56,text:'+'+layerPayout(Math.max(0,s.depth-1)).fmt(),life:70});texts=texts.slice(-12)}
+function onAdvance(oldD,newD,offline){
+ if(newD<=oldD)return;
+ const beforeBest=s.best;s.best=Math.max(s.best,newD);s.totalLayers+=newD-oldD;
+ s.oreCount+=Math.floor(newD/25)-Math.floor(oldD/25);unlockSpecimenNodes(beforeBest,newD,offline);
+ const found=ARTIFACTS.filter(a=>a.depth>oldD&&a.depth<=newD&&!s.discoveries.includes(a.name));
+ for(const a of found)s.discoveries.push(a.name);
+ if(offline)return;
+ if(found.length){notify('◆ ARTIFACT FOUND: '+found[found.length-1].name+'! View in your archive.');return}
+ if(stageIndex(beforeBest)!==stageIndex(newD)){flashEvent('DRILL EVOLVED',DRILL_STAGES[stageIndex(newD)].name,'#9eeedd');return}
+  if(biomeId(oldD)!==biomeId(newD)){notify('NEW REGION: '+biome(newD).name.toUpperCase());return}
+ if(Math.floor(newD/100)>Math.floor(oldD/100))notify('✦ Treasure chamber: HUGE coin bonus!');
+ else if(Math.floor(newD/25)>Math.floor(oldD/25))notify('◆ Ore vein: bonus coins!');
+}
+// Mining pays 70% of ordinary layer value while drilling. The other 30%,
+// plus all ore/treasure multipliers, is paid on breaking the layer. The
+// payout of each complete layer is mathematically unchanged from v1.0.
+const STREAM_SHARE=.70;
+function miningDrip(depth,damage){
+ const full=hpAt(depth);
+ return rewardAt(depth).mul(STREAM_SHARE).mul(Big.num(damage).div(full));
+}
+function applyDamage(amount,offline=false){
+ amount=Big.num(amount);if(!amount.m)return;
+ if(!s.hp)s.hp=hpAt(s.depth);
+ const old=s.depth,firstDepth=s.depth,firstRemaining=s.hp;
+ const firstFull=hpAt(firstDepth);
+ let earned=b(0);
+ if(amount.cmp(s.hp)<0){
+   s.coins=s.coins.add(miningDrip(s.depth,amount));
+   s.hp=s.hp.sub(amount);
+   return;
+ }
+ // Grant any unpaid streaming portion plus the break reward. Previously
+ // paid mining coins are excluded using the remaining-HP fraction.
+ amount=amount.sub(firstRemaining);
+ const previouslyMined=firstFull.sub(firstRemaining);
+ earned=layerPayout(firstDepth).sub(miningDrip(firstDepth,previouslyMined));
+ s.depth++;
+ const start=s.depth,next=hpAt(start);
+ if(amount.cmp(next)>=0){
+   const ratio=amount.div(next),ratioLog=ratio.log10();let n;
+   if(ratioLog<12)n=Math.floor(Math.log1p(ratio.number()*(H-1))/Math.log(H));
+   else n=Math.floor((ratioLog+Math.log10(H-1))/Math.log10(H));
+   n=Math.max(0,Math.min(1000000,n));const cost=k=>geo(next,H,k);
+   while(n>0&&cost(n).cmp(amount)>0)n--;
+   while(n<1000000&&cost(n+1).cmp(amount)<=0)n++;
+   if(n){earned=earned.add(summedPayout(start,n));amount=amount.sub(cost(n));s.depth+=n;}
+ }
+ const remainingFull=hpAt(s.depth);
+ // Damage beyond the last complete layer is still rewarded immediately.
+ if(amount.m){earned=earned.add(miningDrip(s.depth,amount));}
+ s.hp=remainingFull.sub(amount);
+ if(!s.hp.m)s.hp=remainingFull;
+ s.coins=s.coins.add(earned);
+ onAdvance(old,s.depth,offline);
+ if(!offline)layerEffects(s.depth-old,false);
+}
+function simulate(seconds,offline=false){if(seconds<=0)return;const before=s.coins;const offlineBoost=1+(artifactTrait('Forgotten Compass')?.01:0)+(artifactTrait('Timeglass Hour')?.01:0);const amount=dps().mul(seconds*(offline?.80*offlineBoost:pressure));applyDamage(amount,offline);if(!offline)encounterTick(seconds,s.coins.sub(before))}
+// Shared purchase scaling keeps preview, total price, and actual purchase identical.
+const UPGRADE_MULT={power:1.70,speed:1.55,value:1.74};
+const UPGRADE_UNIT={power:'DMG',speed:'HITS/S',value:'COINS/LAYER'};
+function upgradeStat(which,levels){
+ if(which==='power')return dmg().mul(pow(1.28,levels)).fmt();
+ if(which==='speed')return (rate()+levels*.20*(1+artifactSpeedTrait())).toFixed(2);
+ return rewardAt(s.depth).mul(pow(1.28,levels)).fmt();
+}
+function affordCount(which){const cost=price(which);if(s.coins.cmp(cost)<0)return 0;if(mode==='1')return 1;const mult=UPGRADE_MULT[which],v=s.coins.div(cost),lg=v.log10();let n=Math.max(1,Math.floor(Math.log1p(v.number()*(mult-1))/Math.log(mult)));if(lg>12)n=Math.max(1,Math.floor((lg+Math.log10(mult-1))/Math.log10(mult)));n=Math.min(100000,n);const sum=x=>geo(cost,mult,x);while(n>1&&sum(n).cmp(s.coins)>0)n--;while(n<100000&&sum(n+1).cmp(s.coins)<=0)n++;return n}
+function buy(which){const n=affordCount(which);if(!n)return;const mult=UPGRADE_MULT[which];const c=geo(price(which),mult,n);s.coins=s.coins.sub(c);s.up[which]+=n;save();updateUI();if(n>=10)notify(which.toUpperCase()+' +'+n+' levels!')}
+function eligibleCores(){return s.depth>=110?Math.max(2,Math.floor(2*Math.pow((s.depth-85)/25,.55))):0}
+function nextCoreDepth(){
+ const earned=eligibleCores();if(earned<2)return 110;
+ let d=Math.max(110,Math.floor(85+25*Math.pow((earned+1)/2,1/.55))-2);
+ while(d<1e9&&eligibleCoreAt(d)<=earned)d++;
+ while(d>110&&eligibleCoreAt(d-1)>earned)d--;
+ return d;
+}
+function eligibleCoreAt(d){return d>=110?Math.max(2,Math.floor(2*Math.pow((d-85)/25,.55))):0}
+function percentBonus(mult){const v=mult.sub(b(1)).mul(100);return v.e<3?Math.round(v.number()).toLocaleString()+'%':v.fmt()+'%'}
+
+function rebuild(){const amount=eligibleCores();if(!amount)return;const previousBest=s.best,previousDis=s.discoveries.slice(),previousTotal=s.totalLayers,oldCores=s.cores,oldCreated=s.created,oldRebuilt=s.rebuilt;const keep={legacyCoreOffset:s.legacyCoreOffset,seed:s.seed,encounterIndex:s.encounterIndex,encounterElapsed:s.encounterElapsed,encounterGross:s.encounterGross,encounterCount:s.encounterCount,vaultCount:s.vaultCount,oreCount:s.oreCount,activeSeconds:s.activeSeconds,specimens:s.specimens,pendingFinds:s.pendingFinds,duplicateStreak:s.duplicateStreak};s=fresh();Object.assign(s,keep);s.best=previousBest;s.cores=Math.min(100000,oldCores+amount);s.discoveries=previousDis;s.totalLayers=previousTotal;s.created=oldCreated;s.rebuilt=oldRebuilt+1;s.hp=hpAt(0);lastSlam=Date.now()-12000;pressure=1;lastPressureTap=0;slamCharge=0;save();updateUI();notify('✦ REBUILT! PERMANENT STRENGTH INCREASED')}
+function notify(message){const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2600)}
+function updateUI(){if(!s.hp)s.hp=hpAt(s.depth);$('coins').textContent=s.coins.fmt();$('depth').textContent=s.depth.toLocaleString();$('best').textContent=s.best.toLocaleString();$('biome').textContent=biome(s.depth).name;$('coreCount').textContent=s.cores.toLocaleString();$('coreBonus').textContent='+'+percentBonus(coreBonus())+' DMG · +'+percentBonus(coreCoinBonus())+' COINS';$('artifactCount').textContent=s.discoveries.length+'/'+ARTIFACTS.length;$('artifactBonus').textContent='+'+(s.discoveries.length*2)+'% COINS';$('nextCoreBtn').textContent=s.depth<110?'CORE AT 110':('NEXT CORE: '+nextCoreDepth().toLocaleString());$('income').textContent='+'+dps().mul(pressure).div(hpAt(s.depth)).mul(rewardAt(s.depth)).mul(STREAM_SHARE).fmt()+'/s';const full=hpAt(s.depth);const frac=Math.max(0,Math.min(100,s.hp.div(full).number()*100));$('healthFill').style.width=frac+'%';$('healthText').textContent='LAYER '+(s.depth+1).toLocaleString()+' • '+Math.round(100-frac)+'% BROKEN';const n=nextRegion(s.depth),previous=n===40?0:n===100?40:n===200?100:n===350?200:n===550?350:n-300;$('nextMilestone').textContent='Next region: '+n.toLocaleString();$('milestoneFill').style.width=(100*Math.max(0,Math.min(1,(s.depth-previous)/(n-previous))))+'%';for(const name of ['power','speed','value']){
+ const level=s.up[name],item=document.querySelector('[data-upgrade='+name+']');
+ const next=price(name),can=s.coins.cmp(next)>=0;
+ // This is the actual number of levels buy() will purchase, not a guess.
+ const count=can?affordCount(name):0;
+ const total=(mode==='max'&&count>0)?geo(next,UPGRADE_MULT[name],count):next;
+ const oldStat=upgradeStat(name,0),newStat=upgradeStat(name,count);
+ item.disabled=!can;item.classList.toggle('afford',can);
+ $('lvl'+name).textContent='Lv '+level+(count>0?' → '+(level+count):'');
+ const desc=count>0?oldStat+' → '+newStat+' '+UPGRADE_UNIT[name]:oldStat+' '+UPGRADE_UNIT[name];
+ $('desc'+name.charAt(0).toUpperCase()+name.slice(1)).textContent=desc;
+ const unit=count===1?'LEVEL':'LEVELS';
+ const priceLabel=mode==='max'?(count>0?'TOTAL · +'+count+' '+unit:'NEXT LEVEL'):'+1 LEVEL';
+ $('price'+name).innerHTML=total.fmt()+'<span>'+priceLabel+'</span>';
+ item.setAttribute('aria-label',name.toUpperCase()+', level '+level+'. '+(count>0?'Buy '+count+' '+unit.toLowerCase()+' for '+total.fmt()+' coins. '+oldStat+' to '+newStat+' '+UPGRADE_UNIT[name]: 'Next level costs '+next.fmt()+' coins, insufficient balance.'));
+ }$('modeBtn').textContent=mode==='1'?'BUY ×1 ▾':'BUY MAX ▾';const core=eligibleCores();$('rebuildBtn').disabled=core===0;$('rebuildBtn').textContent=core?'✦ REBUILD FOR +'+core+' CORE'+(core>1?'S':''):'✦ REBUILD UNLOCKS AT 110';const elapsed=(Date.now()-lastSlam)/1000;const ready=elapsed>=12;$('slamBtn').disabled=!ready;$('slamText').textContent=ready?'TAP FOR A HUGE HIT':('Ready in '+Math.ceil(12-elapsed)+'s');$('pressureValue').textContent=pressure.toFixed(1)+'×';$('pressureFill').style.width=((pressure-1)*50).toFixed(1)+'%';const inactive=performance.now()-lastPressureTap;$('pressureHint').textContent=pressure>=2.999&&inactive<PRESSURE_HOLD_MS?'MAXED · '+Math.ceil((PRESSURE_HOLD_MS-inactive)/1000)+'S HOLD':pressure>1&&inactive>=PRESSURE_HOLD_MS?'PRESSURE COOLING':pressure>1?'KEEP TAPPING TO BOOST':'TAP THE MINE TO BOOST';}
+const canvas=$('scene'),ctx=canvas.getContext('2d'),Stars=Array.from({length:20},(_,i)=>({x:(i*109.7)%401,y:(i*73.3)%301,r:1+(i%3)}));
+function draw(){if(!visible)return;const W=canvas.clientWidth,h=canvas.clientHeight,dpr=Math.min(window.devicePixelRatio||1,2),rw=Math.round(W*dpr),rh=Math.round(h*dpr);if(canvas.width!==rw||canvas.height!==rh){canvas.width=rw;canvas.height=rh}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,h);const env=biome(s.depth),now=performance.now(),motion=now/1000;ctx.save();ctx.translate((Math.random()-.5)*shake,(Math.random()-.5)*shake);shake*=.87;
+ let bg=ctx.createLinearGradient(0,0,0,h);bg.addColorStop(0,'#0a1830');bg.addColorStop(.65,env.top);bg.addColorStop(1,env.bottom);ctx.fillStyle=bg;ctx.fillRect(-12,-12,W+24,h+24);
+ // Distinctive authored geological motifs; low-overdraw, stable without images.
+  const kind=biomeId(s.depth),baseY=h*.43;
+  ctx.save();ctx.globalAlpha=.23;ctx.strokeStyle=env.gem;ctx.lineWidth=2;
+  for(let j=0;j<6;j++){
+   const xx=24+j*(W-48)/5,yy=baseY+(j%3)*24;
+   ctx.beginPath();
+   if(kind===1||kind===4){ctx.moveTo(xx-10,yy);ctx.lineTo(xx,yy-9);ctx.lineTo(xx+13,yy+4);ctx.lineTo(xx+6,yy+13)}
+   else if(kind===2||kind===8){ctx.moveTo(xx-8,yy+11);ctx.lineTo(xx-3,yy-13);ctx.lineTo(xx+3,yy+8);ctx.lineTo(xx+9,yy-7)}
+   else if(kind===3||kind===7){ctx.moveTo(xx-9,yy);ctx.lineTo(xx,yy-14);ctx.lineTo(xx+10,yy);ctx.lineTo(xx,yy+16);ctx.closePath()}
+   else if(kind===6){ctx.arc(xx,yy,8,0,Math.PI*2)}
+   else{ctx.moveTo(xx-10,yy+8);ctx.lineTo(xx,yy-7);ctx.lineTo(xx+10,yy+8)}
+   ctx.stroke();
+  }
+  ctx.restore();
+ // tunnels, rock formations, seams
+ for(let j=0;j<7;j++){const yy=h*.42+j*56-((s.depth*.65)%56);ctx.fillStyle=(j%2===0?'#ffffff0b':'#0000001c');ctx.fillRect(-20,yy,W+40,4);ctx.strokeStyle='#ffffff0f';ctx.lineWidth=1;ctx.beginPath();for(let k=0;k<=8;k++){const x=k*W/8,y=yy+13+Math.sin(k*2.6+j)*9;if(k===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)}ctx.stroke()}
+ // side shaft supports
+ ctx.fillStyle='#152138';ctx.fillRect(8,0,12,h);ctx.fillRect(W-20,0,12,h);ctx.fillStyle='#38506b';for(let y=-5;y<h;y+=39){ctx.fillRect(9,y,10,2);ctx.fillRect(W-19,y,10,2)}
+ // rare ore dots
+ for(const st of Stars){let x=st.x/401*W,y=((st.y+s.depth*2.9)%h);ctx.fillStyle=env.gem+'aa';ctx.beginPath();ctx.moveTo(x,y-st.r*2);ctx.lineTo(x+st.r,y);ctx.lineTo(x,y+st.r*2);ctx.lineTo(x-st.r,y);ctx.closePath();ctx.fill()}
+ // impact platform
+ const ground=h*.62;const drillTier=stageIndex();ctx.fillStyle='#00000060';ctx.beginPath();ctx.ellipse(W*.5,ground+16,W*.30,15,0,0,Math.PI*2);ctx.fill();
+ ctx.strokeStyle='#e9b56c';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(W*.28,ground);ctx.lineTo(W*.72,ground);ctx.stroke();
+ // gear suspension
+ const cx=W/2,headY=ground-79+Math.sin(motion*rate()*7*pressure)*2;ctx.strokeStyle='#546b83';ctx.lineWidth=7;ctx.beginPath();ctx.moveTo(cx,-10);ctx.lineTo(cx,headY-31);ctx.stroke();ctx.strokeStyle='#a8c5da';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(cx-2,-10);ctx.lineTo(cx-2,headY-31);ctx.stroke();
+ const gl=ctx.createRadialGradient(cx,headY+12,7,cx,headY+12,100);gl.addColorStop(0,env.gem+'77');gl.addColorStop(1,'#00000000');ctx.fillStyle=gl;ctx.fillRect(cx-100,headY-88,200,200);
+ // drill motor body
+ ctx.fillStyle='#131f34';ctx.fillRect(cx-62,headY-40,124,55);ctx.fillStyle='#597795';ctx.fillRect(cx-57,headY-37,114,49);ctx.fillStyle='#233b58';ctx.fillRect(cx-53,headY-33,106,41);ctx.fillStyle=env.accent;ctx.fillRect(cx-52,headY-29,104,7);ctx.fillStyle='#9ae4fa';ctx.fillRect(cx-45,headY-14,90,14);ctx.fillStyle='#192c47';ctx.font='800 11px system-ui';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('BOTTOMLESS',cx,headY-7,82);ctx.textBaseline='alphabetic';
+  // Author-drawn evolution details, earned from lifetime best depth.
+  if(drillTier>=1){ctx.fillStyle='#607e9e';ctx.fillRect(cx-56,headY-35,6,42);ctx.fillRect(cx+50,headY-35,6,42)}
+  if(drillTier>=2){ctx.fillStyle='#d4dfe8';ctx.fillRect(cx-52,headY-42,104,5);ctx.fillStyle='#223958';ctx.fillRect(cx-58,headY-15,8,19);ctx.fillRect(cx+50,headY-15,8,19)}
+  if(drillTier>=3){ctx.fillStyle='#ffad69';ctx.fillRect(cx-54,headY-28,4,14);ctx.fillRect(cx+50,headY-28,4,14)}
+  if(drillTier>=4){ctx.fillStyle='#8ff9ff';for(const x of [-58,56]){ctx.beginPath();ctx.moveTo(cx+x,headY-8);ctx.lineTo(cx+x+3,headY-19);ctx.lineTo(cx+x+6,headY-8);ctx.fill()}}
+  if(drillTier>=5){ctx.strokeStyle='#e3cf98';ctx.lineWidth=2;ctx.strokeRect(cx-47,headY-39,94,51)}
+  if(drillTier>=6){ctx.fillStyle='#a2f4d8';ctx.fillRect(cx-56,headY-40,4,37);ctx.fillRect(cx+52,headY-40,4,37)}
+  if(drillTier>=7){ctx.fillStyle='#ceaeff';ctx.fillRect(cx-69,headY-25,9,9);ctx.fillRect(cx+60,headY-25,9,9)}
+  if(drillTier>=8){ctx.strokeStyle='#ffda8b';ctx.lineWidth=2;ctx.strokeRect(cx-61,headY-45,122,66)}
+  if(artifactTrait('Bottomless Emblem')){ctx.fillStyle='#f4cc84';ctx.fillRect(cx+42,headY-31,6,6)}
+
+ // spinning drill bit
+ ctx.save();ctx.translate(cx,headY+21);ctx.rotate(Math.sin(motion*rate()*10)*.03);const spin=motion*rate()*5*pressure;ctx.fillStyle='#91a7bf';ctx.beginPath();ctx.moveTo(-21,-6);ctx.lineTo(21,-6);ctx.lineTo(11,17);ctx.lineTo(0,39);ctx.lineTo(-11,17);ctx.closePath();ctx.fill();ctx.strokeStyle='#d3e3ef';ctx.lineWidth=4;for(let i=0;i<3;i++){const y=i*10;ctx.beginPath();ctx.moveTo(-16+i*3,y);ctx.lineTo(16-i*3,y+Math.sin(spin+i)*4);ctx.stroke()}ctx.restore();
+ // sparks particles
+ for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.x+=p.vx;p.y+=p.vy;p.vy+=.16;p.life-=1;ctx.globalAlpha=Math.min(1,p.life/20);ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,p.size,p.size);if(p.life<=0)particles.splice(i,1)}ctx.globalAlpha=1;
+ for(let i=texts.length-1;i>=0;i--){let x=texts[i];x.y-=.5;x.life--;ctx.fillStyle='#ffdf91';ctx.font='900 14px system-ui';ctx.textAlign='center';ctx.fillText(x.text,x.x,x.y);if(x.life<=0)texts.splice(i,1)}
+ ctx.restore();ctx.fillStyle='#00000025';ctx.fillRect(0,0,W,7);
+}
+function showDialog(title,body,buttons){$('dialogTitle').textContent=title;$('dialogBody').innerHTML=body;const el=$('dialogActions');el.innerHTML='';for(const cfg of buttons){let btn=document.createElement('button');btn.textContent=cfg.text;if(cfg.className)btn.className=cfg.className;btn.addEventListener('click',cfg.click);el.appendChild(btn)}$('dialogScroll').scrollTop=0;$('overlay').classList.add('show');$('dialogClose').focus({preventScroll:true})}
+function close(){ $('overlay').classList.remove('show')}
+function showCollection(){const owned=new Set(s.discoveries);const next=ARTIFACTS.find(a=>!owned.has(a.name));const rows=ARTIFACTS.map((a,i)=>owned.has(a.name)?`<div class="collection-row"><span class="collection-symbol">◆</span><div><strong>${a.name}</strong><div class="small">${a.description} · Found at depth ${a.depth.toLocaleString()}</div></div></div>`:`<div class="collection-row locked"><span class="collection-symbol">◇</span><div><strong>Undiscovered Artifact ${i+1}</strong><div class="small">Explore deeper to uncover it.</div></div></div>`).join('');showDialog('Artifact collection',`<p><strong>${s.discoveries.length} of ${ARTIFACTS.length}</strong> unique artifacts found. Every artifact permanently boosts coins by <strong>+2%</strong>, even after rebuilding. Total collection bonus: <strong>+${s.discoveries.length*2}%</strong>.</p><p>${next?'Next new artifact: around depth <strong>'+next.depth.toLocaleString()+'</strong>.':'You found every artifact in the current collection!'}</p><div class="collection-scroll">${rows}</div>`,[{text:'Keep digging',className:'primary',click:close}])}
+function showCores(){
+ const n=nextCoreDepth(),potential=eligibleCores(),damage=percentBonus(coreBonus()),coins=percentBonus(coreCoinBonus());
+ const until=Math.max(0,n-s.depth);
+ showDialog('Permanent cores',`<p><strong>✦ ${s.cores.toLocaleString()} cores owned</strong></p><p>Current permanent bonuses:<br><strong>+${damage} drill damage</strong><br><strong>+${coins} coin earnings</strong></p><p>Core bonuses compound strongly for the first 12 cores. Later cores add smaller, still permanent gains, avoiding runaway growth. Previously earned core strength from older saves is preserved.</p><p><strong>${s.depth<110?'First rebuild unlocks at depth 110':'Your next core reward increases at depth '+n.toLocaleString()}</strong><br>${until.toLocaleString()} more layers to go.</p><p>Rebuilding now would give you <strong>+${potential} new cores</strong>${potential?' and restart this run at depth 0.':'. Keep digging to unlock rebuilding.'}</p><p class="small">Your best depth, artifacts and owned cores never reset.</p>`,[{text:'Keep digging',className:'primary',click:close}]);
+}
+
+function showSpecimens(){
+ const owned=new Map(s.specimens.map(x=>[x.id,x]));
+ const cards=SPECIMEN_FAMILIES.map((f,i)=>`<h3 class="archive-heading">${f.title} · ${SPECIMENS.filter(x=>x.family===i&&owned.has(x.id)).length}/8</h3><div class="archive-grid">${SPECIMENS.filter(x=>x.family===i).map(x=>{const found=owned.get(x.id);return `<div class="archive-card ${found?'':'locked'}"><span class="archive-glyph">${found?'◇':'◆'}</span><b>${found?x.name:'Unknown specimen'}</b><small>${found?`Found at depth ${found.depth.toLocaleString()} · ${found.source}`:'Discover during excavation or special encounters'}</small></div>`}).join('')}</div>`).join('');
+ showDialog('Specimen archive',`<p><strong>${owned.size}/48</strong> permanent specimens found. They are collectibles, not currency. Duplicates never multiply your earnings.</p>${cards}`,[{text:'Artifacts',click:showCollection},{text:'Milestones',click:showMilestones},{text:'Close',click:close}]);
+}
+function showMilestones(){
+ const milestones=ACHIEVEMENTS.map(a=>`<div class="collection-row ${a.check()?'':'locked'}"><span class="collection-symbol">${a.check()?'✦':'◇'}</span><div><strong>${a.name}</strong><div class="small">${a.desc} · ${a.check()?'Completed':'Not yet earned'}</div></div></div>`).join('');
+ const nextThousand=(Math.floor(s.best/1000)+1)*1000;
+ showDialog('Milestones',`<p><strong>${ACHIEVEMENTS.filter(x=>x.check()).length}/${ACHIEVEMENTS.length}</strong> featured accomplishments. No daily chores or streaks.</p><div class="collection-scroll">${milestones}</div><p>Next endless survey milestone: depth <strong>${nextThousand.toLocaleString()}</strong>. Every thousand layers remains a permanent personal record.</p><p>Lifetime: ${s.totalLayers.toLocaleString()} layers · ${s.encounterCount.toLocaleString()} encounters · ${s.vaultCount.toLocaleString()} ancient vaults · ${(s.activeSeconds/3600).toFixed(1)} active hours.</p>`,[{text:'Specimens',click:showSpecimens},{text:'Drill stages',click:showStages},{text:'Close',click:close}]);
+}
+function showStages(){const now=stageIndex();const rows=DRILL_STAGES.map((x,i)=>`<div class="collection-row ${i<=now?'':'locked'}"><span class="collection-symbol">${i<=now?'✦':'◇'}</span><div><strong>${x.name}</strong><div class="small">Best depth ${x.depth.toLocaleString()} · ${i<=now?'Unlocked':'Locked'}</div></div></div>`).join('');showDialog('Drill evolution',`<p>Your drill changes appearance automatically when you reach a lifetime depth milestone. No equipment screen or purchase required.</p>${artifactTrait('Ancient Star Chart')?'<p>Star Chart preview: your next region is <strong>'+biome(nextRegion(s.depth)).name+'</strong>.</p>':''}<div class="collection-scroll">${rows}</div>`,[{text:'Milestones',click:showMilestones},{text:'Close',click:close}])}
+
+function openLegacy(){location.href='./legacy.html'}
+function showMenu(){showDialog('Game menu',`<p><strong>How to play:</strong> Your drill works automatically and earns coins as it damages rock, plus a bonus when each layer breaks. Buy Power, Speed, and Value upgrades. Tap the mine to build DRILL PRESSURE up to 3× damage. It takes 25 taps to reach 3×. Full pressure holds for 10 seconds after the last tap, then slowly fades to 1× over 60 seconds. POWER SLAM delivers a huge hit every 12 seconds. Dig to depth 110 to unlock optional permanent rebuilds.</p><p><strong>Artifacts:</strong> ${s.discoveries.length} of ${ARTIFACTS.length} found. Each gives +2% permanent coin value. Ore veins every 25 layers and treasure chambers every 100 give extra coins. Random special encounters appear after roughly 4–7 minutes of accumulated active play, and do not tick while away.</p><p><strong>Your progress:</strong> ${s.totalLayers.toLocaleString()} total layers, ${s.rebuilt} rebuilds, ${s.best.toLocaleString()} best depth, ${s.cores} permanent cores.</p><p><strong>Idle progress:</strong> Your machine runs while you're away at 80% speed, without buying upgrades. Progress is saved on this device.</p><p class="small">Clearing browser data or switching phones can erase progress. Export a backup to keep it safe. Your old v0.1 progress remains separate and is available in the legacy game.</p><div class="divider"></div><p class="small">BOTTOMLESS v2.0. 48 collectible specimens, rare encounters and evolving drill designs. No ads, tracking, accounts or purchases.</p>`,[
+{text:'Close',click:close},{text:'Artifacts',click:showCollection},{text:'Specimens',click:showSpecimens},{text:'Milestones',click:showMilestones},{text:'Drill stages',click:showStages},{text:'Export save',click:exportSave},{text:'Import save',click:importSave},{text:'Old v0.1 game',click:openLegacy},{text:'Start over',className:'danger',click:resetConfirm}])}
+function exportSave(){save();const raw=localStorage.getItem(SAVE_KEY),blob=new Blob([raw],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='bottomless-v2-save.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);close();notify('Save backup exported')}
+function importSave(){let input=document.createElement('input');input.type='file';input.accept='.json,application/json';input.addEventListener('change',async()=>{try{const o=JSON.parse(await input.files[0].text());if(!o||(o.version!==3&&o.version!==4)||!o.up||!Array.isArray(o.coins))throw Error('Invalid save');const old=s;if(!loadObj(o)){s=old;throw Error('Invalid save')}save();close();updateUI();notify('Save restored successfully')}catch(err){notify('Could not import that save file')}});input.click()}
+function resetConfirm(){showDialog('Erase your progress?',`<p>This deletes the save on this device, including all depth records, coins, cores, and discoveries. You cannot undo this without a backup.</p>`,[{text:'Cancel',click:close},{text:'Erase and restart',className:'danger',click:()=>{s=fresh();s.hp=hpAt(0);save();close();updateUI();notify('Fresh expedition started')}}])}
+function rebuildConfirm(){const c=eligibleCores();if(!c)return;showDialog('Rebuild your machine?',`<p>Trade this run for <strong>+${c} permanent ${c===1?'core':'cores'}</strong>. Your first 12 cores retain the original 20% damage and 15% coin multipliers. Later cores grant smaller permanent increases to prevent runaway growth.</p><p>Your coin balance, temporary upgrades, and current depth restart at zero. Your personal best and discoveries stay forever.</p><p class="small">Rebuilding is optional. You can keep digging instead.</p>`,[{text:'Keep digging',click:close},{text:'Rebuild +'+c,className:'primary',click:()=>{close();rebuild()}}])}
+function hitParticles(label){const W=canvas.clientWidth,Hh=canvas.clientHeight,env=biome(s.depth);for(let i=0;i<16;i++){const angle=Math.random()*Math.PI*2,speed=1+Math.random()*5;particles.push({x:W*.5,y:Hh*.62,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed-2,life:25+Math.random()*18,color:i%3===0?'#ffd46f':env.gem,size:2+Math.random()*4})}particles=particles.slice(-140);texts.push({x:W*.5,y:Hh*.60,text:label,life:58});texts=texts.slice(-12)}
+// Drill pressure is ephemeral: never stored in a save, no offline benefits.
+// It takes 25 taps (+0.08 each) to reach 3x. Hold for 10s after the last tap,
+// then decay at a constant rate from 3x to 1x over 60s. No offline boost.
+const PRESSURE_GAIN=.08, PRESSURE_HOLD_MS=10000, PRESSURE_DECAY_PER_SEC=2/60;
+function tapPressure(){
+ if(!visible||$('overlay').classList.contains('show'))return;
+ const now=performance.now();if(now-lastPressureInput<75)return;
+ lastPressureInput=now;lastPressureTap=now;
+ pressure=Math.min(3,pressure+PRESSURE_GAIN);
+ shake=Math.min(4,shake+1.2);
+ updateUI();
+}
+function decayPressure(delta,now){
+ if(pressure<=1)return;
+ if(now-lastPressureTap>PRESSURE_HOLD_MS)pressure=Math.max(1,pressure-delta*PRESSURE_DECAY_PER_SEC);
+}
+function doSlam(){if(Date.now()-lastSlam<12000)return;lastSlam=Date.now();s.slams++;applyDamage(hpAt(s.depth).mul(.10).add(dps().mul(3)).mul(1+slamTrait()));shake=18;hitParticles('POWER SLAM!');save();updateUI();notify('POWER SLAM!')}
+
+document.querySelectorAll('[data-upgrade]').forEach(el=>el.addEventListener('click',()=>buy(el.dataset.upgrade)));$('modeBtn').addEventListener('click',()=>{mode=mode==='1'?'max':'1';updateUI()});$('slamBtn').addEventListener('click',doSlam);$('pressurePad').addEventListener('pointerdown',tapPressure);$('pressurePad').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tapPressure()}});canvas.addEventListener('pointerdown',tapPressure);$('rebuildBtn').addEventListener('click',rebuildConfirm);$('treasure').addEventListener('click',showCollection);$('corePanel').addEventListener('click',showCores);$('nextCoreBtn').addEventListener('click',showCores);$('dialogClose').addEventListener('click',close);$('menuBtn').addEventListener('click',showMenu);$('overlay').addEventListener('click',e=>{if(e.target===$('overlay'))close()});document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+try{const saved=localStorage.getItem(SAVE_KEY);if(saved&&JSON.parse(saved).version===3&&!localStorage.getItem(BACKUP_KEY)){localStorage.setItem(BACKUP_KEY,saved)}if(saved&&loadObj(JSON.parse(saved))){if(JSON.parse(saved).version===3)save();const away=Math.max(0,(Date.now()-s.lastSave)/1000);if(away>5){const before=s.depth,oldCoins=s.coins;simulate(away,true);save();const earned=s.coins.sub(oldCoins);const finds=s.pendingFinds.slice();s.pendingFinds=[];save();const findText=finds.length?'<p><strong>New specimens:</strong> '+finds.slice(0,3).map(id=>SPECIMEN_BY_ID.get(id)?.name).filter(Boolean).join(', ')+(finds.length>3?' and '+(finds.length-3)+' more':'')+'</p>':'';setTimeout(()=>showDialog('Welcome back!',`<p>Your drill kept running while you were away for <strong>${away>=3600?(away/3600).toFixed(1)+' hours':Math.floor(away/60)+' minutes'}</strong>.</p><p><strong style="color:#ffcf78">+${earned.fmt()} coins</strong><br><strong style="color:#8fe5ee">+${(s.depth-before).toLocaleString()} layers</strong> drilled</p>${findText}<p>Time to buy some upgrades and go deeper.</p>`,[{text:'Keep digging!',className:'primary',click:close}]),300)}}else{s.hp=hpAt(0);save();if(localStorage.getItem(OLD_SAVE_KEY))setTimeout(()=>showDialog('New balanced expedition',`<p>Welcome to <strong>BOTTOMLESS 2.0</strong>! This edition adds evolving drills, permanent specimens, encounters and meaningful milestones.</p><p><strong>Your original progress has not been deleted.</strong> Open v0.1 Legacy from the menu any time. The new balanced version starts a separate save because the old economy advanced thousands of times too fast.</p>`,[{text:'Play BOTTOMLESS 2.0',className:'primary',click:close},{text:'Open my old game',click:openLegacy}]),450)}}catch(err){s=fresh();s.hp=hpAt(0)}
+function frame(now){let delta=Math.max(0,(now-lastFrame)/1000);lastFrame=now;if(delta>0&&visible){decayPressure(Math.min(delta,60),now);simulate(Math.min(delta,60));if(delta>60)simulate(delta-60,true)}if(now-lastUi>160){updateUI();lastUi=now}draw();if(Date.now()-lastSave>4000)save();requestAnimationFrame(frame)}
+document.addEventListener('visibilitychange',()=>{if(document.hidden){visible=false;pressure=1;lastPressureTap=0;save()}else{visible=true;pressure=1;lastPressureTap=0;const away=(Date.now()-lastSave)/1000;if(away>1)simulate(away,true);lastFrame=performance.now();updateUI()}});window.addEventListener('pagehide',save);s.hp=s.hp||hpAt(s.depth);updateUI();requestAnimationFrame(frame);
+})();
+</script>
+<script>if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {navigator.serviceWorker.register("./sw.js").catch(()=>{});}</script>
+</body>
+</html>
