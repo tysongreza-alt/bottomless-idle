@@ -482,7 +482,7 @@ const CORE_MILESTONES=[110,120,130,145,165,190,220];
 const PRESTIGE_SECONDS_PER_CORE=180;
 function prestigeEarned(){return Math.floor((s.prestigeWork||0)/PRESTIGE_SECONDS_PER_CORE)}
 function prestigeStarter(){return !s.starterPrestigeClaimed&&s.best>=110?2:0}
-function eligibleCores(){return Math.max(0,prestigeEarned()-(s.prestigeSpent||0))+prestigeStarter()}
+function eligibleCores(){if(s.best<110&&!s.starterPrestigeClaimed)return 0;return Math.min(Math.max(0,100000-s.cores),Math.max(0,prestigeEarned()-(s.prestigeSpent||0))+prestigeStarter())}
 function nextCoreSeconds(){return Math.max(0,PRESTIGE_SECONDS_PER_CORE-((s.prestigeWork||0)%PRESTIGE_SECONDS_PER_CORE))}
 function recordPrestigeMining(seconds,oldDepth){
  if(!Number.isFinite(seconds)||seconds<=0)return;
@@ -630,7 +630,7 @@ function showCollection(){const owned=new Set(s.discoveries);const next=ARTIFACT
 function showCores(){
  const potential=eligibleCores(),damage=percentBonus(coreBonus()),coins=percentBonus(coreCoinBonus());
  const next=Math.ceil(nextCoreSeconds());
- showDialog('Permanent cores',`<p><strong>✦ ${s.cores.toLocaleString()} cores owned</strong></p><p>Permanent bonuses:<br><strong>+${damage} drill damage</strong><br><strong>+${coins} coin earnings</strong></p><p><strong>${potential} new cores ready</strong>. Next mining core in approximately ${next} productive seconds. Clearing layers earns a modest progress bonus. Offline mining counts.</p><p>${!s.starterPrestigeClaimed?'Your first depth 110 milestone also grants two starter cores.':'All starter rewards have been claimed.'}</p><p class="small">Rebuilding never removes existing cores, artifacts or records. The same mining credit cannot be claimed twice.</p>`,[{text:'Keep digging',className:'primary',click:close}]);
+ showDialog('Permanent cores',`<p><strong>✦ ${s.cores.toLocaleString()} cores owned</strong></p><p>Permanent bonuses:<br><strong>+${damage} drill damage</strong><br><strong>+${coins} coin earnings</strong></p><p><strong>${potential} new cores ready</strong>. Next mining core in approximately ${next} mining seconds (faster when breaking layers). Clearing layers earns a modest progress bonus. Offline mining counts.</p><p>${!s.starterPrestigeClaimed?'Your first depth 110 milestone also grants two starter cores.':'All starter rewards have been claimed.'}</p><p class="small">Rebuilding never removes existing cores, artifacts or records. The same mining credit cannot be claimed twice.</p>`,[{text:'Keep digging',className:'primary',click:close}]);
 }
 
 function showSpecimens(){
