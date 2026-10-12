@@ -188,7 +188,7 @@ class Big {
  fmt(d=1){return compactNumber(this,d)}
 }
 const b=n=>Big.num(n), pow=(r,e)=>Big.pow(r,e);
-function fresh(){const now=Date.now();return {version:4,coins:b(0),depth:0,best:0,hp:null,up:{power:0,speed:0,value:0},cores:0,legacyCoreOffset:0,claimedPrestige:0,rebuilt:0,slams:0,discoveries:[],totalLayers:0,created:now,lastSave:now,seed:(now>>>0)^0x9e3779b9,encounterIndex:0,encounterElapsed:0,encounterGross:b(0),encounterCount:0,vaultCount:0,oreCount:0,activeSeconds:0,specimens:[],duplicateStreak:0,pendingFinds:[],eventHistory:[]}}
+function fresh(){const now=Date.now();return {version:4,coins:b(0),depth:0,best:0,hp:null,up:{power:0,speed:0,value:0},cores:0,legacyCoreOffset:0,claimedPrestige:0,prestigeWork:0,prestigeSpent:0,starterPrestigeClaimed:false,rebuilt:0,slams:0,discoveries:[],totalLayers:0,created:now,lastSave:now,seed:(now>>>0)^0x9e3779b9,encounterIndex:0,encounterElapsed:0,encounterGross:b(0),encounterCount:0,vaultCount:0,oreCount:0,activeSeconds:0,specimens:[],duplicateStreak:0,pendingFinds:[],eventHistory:[]}}
 let s=fresh(), mode='1', lastFrame=performance.now(), lastUi=0, lastSave=Date.now(), hitAcc=0, lastSlam=Date.now()-12000, slamCharge=0, pressure=1, lastPressureTap=0, lastPressureInput=0, particles=[],texts=[],shake=0, anim=0, toastTimer, eventTimer, visible=true;
 const STARTS=[0,40,100,200,350,550], BIOMES=[{name:'Surface Soil',top:'#594431',bottom:'#8f6143',accent:'#dec295',gem:'#edc58d'},{name:'Iron Slate',top:'#37475b',bottom:'#566d7d',accent:'#a0d0e5',gem:'#9ec6fa'},{name:'Ember Caverns',top:'#5b2c36',bottom:'#9b4b32',accent:'#f6a65a',gem:'#ff8a51'},{name:'Crystal Deep',top:'#263c62',bottom:'#365b8b',accent:'#c197ff',gem:'#8ff9fc'},{name:'Lost Ruins',top:'#4c4059',bottom:'#777074',accent:'#d7c69a',gem:'#ffe3a5'},{name:'The Deep Unknown',top:'#191c40',bottom:'#463a73',accent:'#ac7bff',gem:'#e298fa'},{name:'Subterranean Ocean',top:'#083955',bottom:'#145772',accent:'#69d9ef',gem:'#8bf9ff'},{name:'Starfall Veins',top:'#27335e',bottom:'#684c86',accent:'#f0b8fd',gem:'#ffe1ff'},{name:'Ancient Reactor',top:'#304b3d',bottom:'#677644',accent:'#deff78',gem:'#c9ffb2'}];
 const biomeId=d=>{if(d<550){let i=0;while(i<STARTS.length-1&&d>=STARTS[i+1])i++;return i}return 5+Math.floor((d-550)/300)%4}, biome=d=>BIOMES[biomeId(d)];
@@ -326,14 +326,14 @@ function geo(first,r,n){if(n<=0)return b(0);return first.mul(pow(r,n).sub(1)).di
 function bonusSum(start,n,step,extra){if(!n)return b(0);const finish=start+n-1;const first=Math.ceil(start/step)*step;if(first>finish)return b(0);const count=Math.floor((finish-first)/step)+1;return geo(rewardAt(first),Math.pow(R,step),count).mul(extra)}
 function layerPayout(depth){const value=rewardAt(depth),num=depth+1;let bonus=1;if(num%25===0)bonus+=3*(1+oreTrait());if(num%100===0)bonus+=12*(1+treasureTrait());return value.mul(bonus)}
 function summedPayout(start,n){let v=geo(rewardAt(start),R,n);const a=start+1,z=start+n;for(const [step,extra] of [[25,3*(1+oreTrait())],[100,12*(1+treasureTrait())]]){const first=Math.ceil(a/step)*step;if(first>z)continue;const count=Math.floor((z-first)/step)+1;v=v.add(geo(rewardAt(first-1),Math.pow(R,step),count).mul(extra))}return v}
-function save(){try{const data={version:4,coins:s.coins.pack(),depth:s.depth,best:s.best,hp:(s.hp||hpAt(s.depth)).pack(),up:s.up,cores:s.cores,legacyCoreOffset:s.legacyCoreOffset,claimedPrestige:s.claimedPrestige,rebuilt:s.rebuilt,slams:s.slams,discoveries:s.discoveries,totalLayers:s.totalLayers,created:s.created,lastSave:Date.now(),seed:s.seed,encounterIndex:s.encounterIndex,encounterElapsed:s.encounterElapsed,encounterGross:s.encounterGross.pack(),encounterCount:s.encounterCount,vaultCount:s.vaultCount,oreCount:s.oreCount,activeSeconds:s.activeSeconds,specimens:s.specimens,duplicateStreak:s.duplicateStreak,pendingFinds:s.pendingFinds,eventHistory:s.eventHistory};localStorage.setItem(SAVE_KEY,JSON.stringify(data));lastSave=Date.now();$('saved').textContent='Saved locally'}catch(err){$('saved').textContent='Save unavailable'}}
+function save(){try{const data={version:4,coins:s.coins.pack(),depth:s.depth,best:s.best,hp:(s.hp||hpAt(s.depth)).pack(),up:s.up,cores:s.cores,legacyCoreOffset:s.legacyCoreOffset,claimedPrestige:s.claimedPrestige,prestigeWork:s.prestigeWork,prestigeSpent:s.prestigeSpent,starterPrestigeClaimed:s.starterPrestigeClaimed,rebuilt:s.rebuilt,slams:s.slams,discoveries:s.discoveries,totalLayers:s.totalLayers,created:s.created,lastSave:Date.now(),seed:s.seed,encounterIndex:s.encounterIndex,encounterElapsed:s.encounterElapsed,encounterGross:s.encounterGross.pack(),encounterCount:s.encounterCount,vaultCount:s.vaultCount,oreCount:s.oreCount,activeSeconds:s.activeSeconds,specimens:s.specimens,duplicateStreak:s.duplicateStreak,pendingFinds:s.pendingFinds,eventHistory:s.eventHistory};localStorage.setItem(SAVE_KEY,JSON.stringify(data));lastSave=Date.now();$('saved').textContent='Saved locally'}catch(err){$('saved').textContent='Save unavailable'}}
 function clampInt(v,max=1000000000){return Math.max(0,Math.min(max,Math.floor(Number(v)||0)))}
 function loadObj(o){
  if(!o||(o.version!==3&&o.version!==4)||!o.up)return false;
  if(!Array.isArray(o.coins)||o.coins.length!==2||!o.coins.every(Number.isFinite))return false;
  const t=fresh();t.coins=Big.read(o.coins);t.depth=clampInt(o.depth);t.best=Math.max(t.depth,clampInt(o.best));t.hp=Big.read(o.hp);if(!t.hp.m||t.hp.cmp(hpAt(t.depth))>0)t.hp=hpAt(t.depth);
  for(const k of ['power','speed','value'])t.up[k]=clampInt(o.up[k],100000);
- t.cores=clampInt(o.cores,100000);t.claimedPrestige=Math.max(t.cores,clampInt(o.claimedPrestige,100000));t.rebuilt=clampInt(o.rebuilt,100000);t.slams=clampInt(o.slams);
+ t.cores=clampInt(o.cores,100000);t.claimedPrestige=Math.max(t.cores,clampInt(o.claimedPrestige,100000));t.prestigeWork=Math.max(0,Math.min(1e12,Number(o.prestigeWork)||0));t.prestigeSpent=clampInt(o.prestigeSpent,100000);t.starterPrestigeClaimed=Boolean(o.starterPrestigeClaimed)||t.rebuilt>0||t.cores>0;t.rebuilt=clampInt(o.rebuilt,100000);t.starterPrestigeClaimed=Boolean(o.starterPrestigeClaimed)||t.rebuilt>0||t.cores>0;t.slams=clampInt(o.slams);
  t.discoveries=Array.isArray(o.discoveries)?[...new Set(o.discoveries.filter(x=>artifactNames.has(x)))]:[];
  t.totalLayers=Math.max(t.depth,clampInt(o.totalLayers,Number.MAX_SAFE_INTEGER));t.created=Number(o.created)||Date.now();t.lastSave=Math.min(Date.now(),Math.max(0,Number(o.lastSave)||Date.now()));
  if(o.version===3){t.legacyCoreOffset=Math.max(0,t.cores-effectiveCoreCount(t.cores));}
@@ -407,7 +407,7 @@ function applyDamage(amount,offline=false){
  onAdvance(old,s.depth,offline);
  if(!offline)layerEffects(s.depth-old,false);
 }
-function simulate(seconds,offline=false){if(seconds<=0)return;const before=s.coins;const offlineBoost=1+(artifactTrait('Forgotten Compass')?.01:0)+(artifactTrait('Timeglass Hour')?.01:0);const amount=dps().mul(seconds*(offline?.80*offlineBoost:pressure));applyDamage(amount,offline);if(!offline)encounterTick(seconds,s.coins.sub(before))}
+function simulate(seconds,offline=false){if(seconds<=0)return;const before=s.coins,oldDepth=s.depth;const offlineBoost=1+(artifactTrait('Forgotten Compass')?.01:0)+(artifactTrait('Timeglass Hour')?.01:0);const amount=dps().mul(seconds*(offline?.80*offlineBoost:pressure));applyDamage(amount,offline);recordPrestigeMining(seconds,oldDepth);if(!offline)encounterTick(seconds,s.coins.sub(before))}
 
 // An optional, deterministic, offline-only spending policy. Never spends coins
 // the player held before leaving; invests up to 75% of newly earned offline coins.
@@ -476,37 +476,27 @@ function buy(which){const n=affordCount(which);if(!n)return;const mult=UPGRADE_M
 // Early milestones make pushing deeper competitive with shallow two-core farming.
 // Beyond depth 220, gaps expand by 15 layers per additional core.
 const CORE_MILESTONES=[110,120,130,145,165,190,220];
-// v2.5 experiment: prestige rewards require new lifetime excavation records.
-// A claimed entitlement is never granted twice, even after rebuilding.
-// Migration sets the claimed floor to the existing core total.
-function prestigeEntitlement(depth){
-  return eligibleCoreAt(depth);
-}
-function eligibleCores(){
-  return Math.max(0,prestigeEntitlement(s.best)-Math.max(s.claimedPrestige||0,s.cores));
-}
-function eligibleCoreAt(d){
- if(d<110)return 0;
- for(let i=CORE_MILESTONES.length-1;i>=0;i--)if(d>=CORE_MILESTONES[i]){
-   if(i<CORE_MILESTONES.length-1)return 2+i;
-   break;
- }
- // For depths >= 220: next thresholds 260, 315, 385, 470, 570 ...
- // Quadratic inverse avoids expensive loops even at extreme depths.
- const delta=Math.max(0,d-220),root=Math.sqrt(32.5*32.5+30*delta);
- const extra=Math.max(0,Math.floor((root-32.5)/15+1e-10));
- return Math.min(100000,8+extra);
-}
-function nextCoreDepth(){
- for(const d of CORE_MILESTONES)if(d>s.depth)return d;
- const n=eligibleCoreAt(s.depth)-8;
- return 220+40*(n+1)+7.5*n*(n+1);
+// v2.5 experimental economy: cumulative productive excavation time.
+// Unlike depth-only rewards, the same easy layers cannot be claimed again.
+// This prototype intentionally leaves core multipliers and rock pacing intact.
+const PRESTIGE_SECONDS_PER_CORE=180;
+function prestigeEarned(){return Math.floor((s.prestigeWork||0)/PRESTIGE_SECONDS_PER_CORE)}
+function prestigeStarter(){return !s.starterPrestigeClaimed&&s.best>=110?2:0}
+function eligibleCores(){return Math.max(0,prestigeEarned()-(s.prestigeSpent||0))+prestigeStarter()}
+function nextCoreSeconds(){return Math.max(0,PRESTIGE_SECONDS_PER_CORE-((s.prestigeWork||0)%PRESTIGE_SECONDS_PER_CORE))}
+function recordPrestigeMining(seconds,oldDepth){
+ if(seconds<=0)return;
+ // Mining activity counts in real seconds. Extra credit is earned when the
+ // expedition actually clears layers; a depth burst cannot mint cores alone.
+ const layers=Math.max(0,s.depth-oldDepth);
+ const bonus=Math.min(seconds*.35,layers*.6);
+ s.prestigeWork=Math.min(1e12,(s.prestigeWork||0)+seconds+bonus);
 }
 function percentBonus(mult){const v=mult.sub(b(1)).mul(100);return v.e<3?Math.round(v.number()).toLocaleString()+'%':v.fmt()+'%'}
 
-function rebuild(){const amount=eligibleCores();if(!amount)return;const previousBest=s.best,previousDis=s.discoveries.slice(),previousTotal=s.totalLayers,oldCores=s.cores,oldCreated=s.created,oldRebuilt=s.rebuilt;const keep={legacyCoreOffset:s.legacyCoreOffset,claimedPrestige:s.claimedPrestige,seed:s.seed,encounterIndex:s.encounterIndex,encounterElapsed:s.encounterElapsed,encounterGross:s.encounterGross,encounterCount:s.encounterCount,vaultCount:s.vaultCount,oreCount:s.oreCount,activeSeconds:s.activeSeconds,specimens:s.specimens,pendingFinds:s.pendingFinds,duplicateStreak:s.duplicateStreak,eventHistory:s.eventHistory};s=fresh();Object.assign(s,keep);s.best=previousBest;s.cores=Math.min(100000,oldCores+amount);s.claimedPrestige=Math.max(s.claimedPrestige,s.cores);s.discoveries=previousDis;s.totalLayers=previousTotal;s.created=oldCreated;s.rebuilt=oldRebuilt+1;s.hp=hpAt(0);lastSlam=Date.now()-12000;pressure=1;lastPressureTap=0;slamCharge=0;save();updateUI();notify('✦ REBUILT! PERMANENT STRENGTH INCREASED')}
+function rebuild(){const amount=eligibleCores();if(!amount)return;const previousBest=s.best,previousDis=s.discoveries.slice(),previousTotal=s.totalLayers,oldCores=s.cores,oldCreated=s.created,oldRebuilt=s.rebuilt;const keep={legacyCoreOffset:s.legacyCoreOffset,claimedPrestige:s.claimedPrestige,prestigeWork:s.prestigeWork,prestigeSpent:s.prestigeSpent,starterPrestigeClaimed:s.starterPrestigeClaimed,seed:s.seed,encounterIndex:s.encounterIndex,encounterElapsed:s.encounterElapsed,encounterGross:s.encounterGross,encounterCount:s.encounterCount,vaultCount:s.vaultCount,oreCount:s.oreCount,activeSeconds:s.activeSeconds,specimens:s.specimens,pendingFinds:s.pendingFinds,duplicateStreak:s.duplicateStreak,eventHistory:s.eventHistory};s=fresh();Object.assign(s,keep);s.best=previousBest;s.cores=Math.min(100000,oldCores+amount);s.prestigeSpent=prestigeEarned();s.starterPrestigeClaimed=true;s.claimedPrestige=Math.max(s.claimedPrestige,s.cores);s.discoveries=previousDis;s.totalLayers=previousTotal;s.created=oldCreated;s.rebuilt=oldRebuilt+1;s.hp=hpAt(0);lastSlam=Date.now()-12000;pressure=1;lastPressureTap=0;slamCharge=0;save();updateUI();notify('✦ REBUILT! PERMANENT STRENGTH INCREASED')}
 function notify(message){const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2600)}
-function updateUI(){if(!s.hp)s.hp=hpAt(s.depth);$('coins').textContent=s.coins.fmt();$('depth').textContent=s.depth.toLocaleString();$('best').textContent=s.best.toLocaleString();$('biome').textContent=biome(s.depth).name;$('encounterCount').textContent=s.encounterCount.toLocaleString();const specialNum=s.depth+1,treasureRock=specialNum%100===0,oreRock=specialNum%25===0;$('specialLayer').hidden=!(oreRock||treasureRock);$('specialLayer').classList.toggle('vault',treasureRock);$('specialLayer').textContent=treasureRock?'✦ TREASURE CHAMBER · BONUS ROCK':'◆ RARE ORE VEIN · BONUS ROCK';$('coreCount').textContent=s.cores.toLocaleString();$('coreBonus').textContent='+'+percentBonus(coreBonus())+' DMG · +'+percentBonus(coreCoinBonus())+' COINS';$('artifactCount').textContent=s.discoveries.length+'/'+ARTIFACTS.length;$('artifactBonus').textContent='+'+(s.discoveries.length*2)+'% COINS';$('nextCoreBtn').textContent=s.depth<110?'CORE AT 110':('NEXT CORE: '+nextCoreDepth().toLocaleString());$('income').textContent='+'+dps().mul(pressure).div(hpAt(s.depth)).mul(rewardAt(s.depth)).mul(STREAM_SHARE).fmt()+'/s';const full=hpAt(s.depth);const frac=Math.max(0,Math.min(100,s.hp.div(full).number()*100));$('healthFill').style.width=frac+'%';$('healthText').textContent='LAYER '+(s.depth+1).toLocaleString()+' • '+Math.round(100-frac)+'% BROKEN';const n=nextRegion(s.depth),previous=n===40?0:n===100?40:n===200?100:n===350?200:n===550?350:n-300;$('nextMilestone').textContent='Next region: '+n.toLocaleString();$('milestoneFill').style.width=(100*Math.max(0,Math.min(1,(s.depth-previous)/(n-previous))))+'%';for(const name of ['power','speed','value']){
+function updateUI(){if(!s.hp)s.hp=hpAt(s.depth);$('coins').textContent=s.coins.fmt();$('depth').textContent=s.depth.toLocaleString();$('best').textContent=s.best.toLocaleString();$('biome').textContent=biome(s.depth).name;$('encounterCount').textContent=s.encounterCount.toLocaleString();const specialNum=s.depth+1,treasureRock=specialNum%100===0,oreRock=specialNum%25===0;$('specialLayer').hidden=!(oreRock||treasureRock);$('specialLayer').classList.toggle('vault',treasureRock);$('specialLayer').textContent=treasureRock?'✦ TREASURE CHAMBER · BONUS ROCK':'◆ RARE ORE VEIN · BONUS ROCK';$('coreCount').textContent=s.cores.toLocaleString();$('coreBonus').textContent='+'+percentBonus(coreBonus())+' DMG · +'+percentBonus(coreCoinBonus())+' COINS';$('artifactCount').textContent=s.discoveries.length+'/'+ARTIFACTS.length;$('artifactBonus').textContent='+'+(s.discoveries.length*2)+'% COINS';$('nextCoreBtn').textContent=!s.starterPrestigeClaimed&&s.best<110?'FIRST CORES AT 110':('NEXT CORE: '+Math.ceil(nextCoreSeconds())+'s MINING');$('income').textContent='+'+dps().mul(pressure).div(hpAt(s.depth)).mul(rewardAt(s.depth)).mul(STREAM_SHARE).fmt()+'/s';const full=hpAt(s.depth);const frac=Math.max(0,Math.min(100,s.hp.div(full).number()*100));$('healthFill').style.width=frac+'%';$('healthText').textContent='LAYER '+(s.depth+1).toLocaleString()+' • '+Math.round(100-frac)+'% BROKEN';const n=nextRegion(s.depth),previous=n===40?0:n===100?40:n===200?100:n===350?200:n===550?350:n-300;$('nextMilestone').textContent='Next region: '+n.toLocaleString();$('milestoneFill').style.width=(100*Math.max(0,Math.min(1,(s.depth-previous)/(n-previous))))+'%';for(const name of ['power','speed','value']){
  const level=s.up[name],item=document.querySelector('[data-upgrade='+name+']');
  const next=price(name),can=s.coins.cmp(next)>=0;
  // This is the actual number of levels buy() will purchase, not a guess.
@@ -521,7 +511,7 @@ function updateUI(){if(!s.hp)s.hp=hpAt(s.depth);$('coins').textContent=s.coins.f
  const priceLabel=mode==='max'?(count>0?'TOTAL · +'+count+' '+unit:'NEXT LEVEL'):'+1 LEVEL';
  $('price'+name).innerHTML=total.fmt()+'<span>'+priceLabel+'</span>';
  item.setAttribute('aria-label',name.toUpperCase()+', level '+level+'. '+(count>0?'Buy '+count+' '+unit.toLowerCase()+' for '+total.fmt()+' coins. '+oldStat+' to '+newStat+' '+UPGRADE_UNIT[name]: 'Next level costs '+next.fmt()+' coins, insufficient balance.'));
- }$('modeBtn').textContent=mode==='1'?'BUY ×1 ▾':'BUY MAX ▾';const core=eligibleCores();$('rebuildBtn').disabled=core===0;$('rebuildBtn').textContent=core?'✦ REBUILD FOR +'+core+' CORE'+(core>1?'S':''):'✦ REBUILD UNLOCKS AT 110';const elapsed=(Date.now()-lastSlam)/1000;const ready=elapsed>=12;$('slamBtn').disabled=!ready;$('slamText').textContent=ready?'TAP FOR A HUGE HIT':('Ready in '+Math.ceil(12-elapsed)+'s');$('pressureValue').textContent=pressure.toFixed(1)+'×';$('pressureFill').style.width=((pressure-1)*50).toFixed(1)+'%';const inactive=performance.now()-lastPressureTap;$('pressureHint').textContent=pressure>=2.999&&inactive<PRESSURE_HOLD_MS?'MAXED · '+Math.ceil((PRESSURE_HOLD_MS-inactive)/1000)+'S HOLD':pressure>1&&inactive>=PRESSURE_HOLD_MS?'PRESSURE COOLING':pressure>1?'KEEP TAPPING TO BOOST':'TAP THE MINE TO BOOST';}
+ }$('modeBtn').textContent=mode==='1'?'BUY ×1 ▾':'BUY MAX ▾';const core=eligibleCores();$('rebuildBtn').disabled=core===0;$('rebuildBtn').textContent=core?'✦ REBUILD FOR +'+core+' CORE'+(core>1?'S':''):'✦ KEEP MINING FOR CORES';const elapsed=(Date.now()-lastSlam)/1000;const ready=elapsed>=12;$('slamBtn').disabled=!ready;$('slamText').textContent=ready?'TAP FOR A HUGE HIT':('Ready in '+Math.ceil(12-elapsed)+'s');$('pressureValue').textContent=pressure.toFixed(1)+'×';$('pressureFill').style.width=((pressure-1)*50).toFixed(1)+'%';const inactive=performance.now()-lastPressureTap;$('pressureHint').textContent=pressure>=2.999&&inactive<PRESSURE_HOLD_MS?'MAXED · '+Math.ceil((PRESSURE_HOLD_MS-inactive)/1000)+'S HOLD':pressure>1&&inactive>=PRESSURE_HOLD_MS?'PRESSURE COOLING':pressure>1?'KEEP TAPPING TO BOOST':'TAP THE MINE TO BOOST';}
 const canvas=$('scene'),ctx=canvas.getContext('2d'),Stars=Array.from({length:20},(_,i)=>({x:(i*109.7)%401,y:(i*73.3)%301,r:1+(i%3)}));
 function draw(){
  if(!visible)return;
@@ -638,9 +628,9 @@ function showDialog(title,body,buttons){$('dialogTitle').textContent=title;$('di
 function close(){ $('overlay').classList.remove('show')}
 function showCollection(){const owned=new Set(s.discoveries);const next=ARTIFACTS.find(a=>!owned.has(a.name));const rows=ARTIFACTS.map((a,i)=>owned.has(a.name)?`<div class="collection-row"><span class="collection-symbol">◆</span><div><strong>${a.name}</strong><div class="small">${a.description} · Found at depth ${a.depth.toLocaleString()}</div></div></div>`:`<div class="collection-row locked"><span class="collection-symbol">◇</span><div><strong>Undiscovered Artifact ${i+1}</strong><div class="small">Explore deeper to uncover it.</div></div></div>`).join('');showDialog('Artifact collection',`<p><strong>${s.discoveries.length} of ${ARTIFACTS.length}</strong> unique artifacts found. Every artifact permanently boosts coins by <strong>+2%</strong>, even after rebuilding. Total collection bonus: <strong>+${s.discoveries.length*2}%</strong>.</p><p>${next?'Next new artifact: around depth <strong>'+next.depth.toLocaleString()+'</strong>.':'You found every artifact in the current collection!'}</p><div class="collection-scroll">${rows}</div>`,[{text:'Keep digging',className:'primary',click:close}])}
 function showCores(){
- const n=nextCoreDepth(),potential=eligibleCores(),damage=percentBonus(coreBonus()),coins=percentBonus(coreCoinBonus());
- const until=Math.max(0,n-s.depth);
- showDialog('Permanent cores',`<p><strong>✦ ${s.cores.toLocaleString()} cores owned</strong></p><p>Current permanent bonuses:<br><strong>+${damage} drill damage</strong><br><strong>+${coins} coin earnings</strong></p><p>Core bonuses compound strongly for the first 12 cores. Later cores add smaller, still permanent gains, avoiding runaway growth. Previously earned core strength from older saves is preserved.</p><p><strong>${s.depth<110?'First rebuild unlocks at depth 110':'Your next core reward increases at depth '+n.toLocaleString()}</strong><br>${until.toLocaleString()} more layers to go.</p><p>Rebuilding now would give you <strong>+${potential} new cores</strong>${potential?' and restart this run at depth 0.':'. Keep digging to unlock rebuilding.'}</p><p class="small">Your best depth, artifacts and owned cores never reset.</p>`,[{text:'Keep digging',className:'primary',click:close}]);
+ const potential=eligibleCores(),damage=percentBonus(coreBonus()),coins=percentBonus(coreCoinBonus());
+ const next=Math.ceil(nextCoreSeconds());
+ showDialog('Permanent cores',`<p><strong>✦ ${s.cores.toLocaleString()} cores owned</strong></p><p>Permanent bonuses:<br><strong>+${damage} drill damage</strong><br><strong>+${coins} coin earnings</strong></p><p><strong>${potential} new cores ready</strong>. Next mining core in approximately ${next} productive seconds. Clearing layers earns a modest progress bonus. Offline mining counts.</p><p>${!s.starterPrestigeClaimed?'Your first depth 110 milestone also grants two starter cores.':'All starter rewards have been claimed.'}</p><p class="small">Rebuilding never removes existing cores, artifacts or records. The same mining credit cannot be claimed twice.</p>`,[{text:'Keep digging',className:'primary',click:close}]);
 }
 
 function showSpecimens(){
